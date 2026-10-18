@@ -154,3 +154,37 @@ main, .site-header, .site-footer {
 .empty { text-align: center; color: var(--muted); padding: 40px 0; }
 
 .site-footer { color: var(--muted); font-size: 0.85rem; padding-top: 32px; padding-bottom: 32px; }
+
+.summary-actions { display: flex; align-items: center; gap: 16px; }
+.surprise-button {
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+}
+.surprise-button:disabled { opacity: 0.5; cursor: default; }
+
+.card-top .badges { margin-right: auto; }
+.card-actions { display: flex; gap: 4px; }
+.toggle {
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.toggle.fav[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.toggle.done[aria-pressed="true"] { color: #fff; border-color: var(--new); background: var(--new); }
+
+.card.is-done { opacity: 0.6; }
+.card.is-done .name { text-decoration: line-through; }
+.card.picked { outline: 3px solid var(--accent); outline-offset: 2px; opacity: 1; }

@@ -59,6 +59,14 @@
             <option value="classic">Classics</option>
           </select>
         </label>
+        <label>Saved
+          <select id="saved">
+            <option value="all">Everything</option>
+            <option value="favorites">Favorites</option>
+            <option value="todo">Not done yet</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
         <label>Sort
           <select id="sort">
             <option value="featured">New &amp; trending first</option>
@@ -72,7 +80,10 @@
 
       <div class="filter-row summary">
         <span id="count" aria-live="polite"></span>
-        <button id="reset" class="link-button" type="button">Reset filters</button>
+        <span class="summary-actions">
+          <button id="surprise" class="surprise-button" type="button">🎲 Surprise me</button>
+          <button id="reset" class="link-button" type="button">Reset filters</button>
+        </span>
       </div>
     </section>
 
@@ -89,6 +100,10 @@
       <div class="card-top">
         <span class="type"></span>
         <span class="badges"></span>
+        <span class="card-actions">
+          <button class="toggle fav" type="button" aria-pressed="false" title="Favorite">♡</button>
+          <button class="toggle done" type="button" aria-pressed="false" title="Mark as done">✓</button>
+        </span>
       </div>
       <h2 class="name"></h2>
       <p class="meta"></p>
