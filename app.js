@@ -245,7 +245,7 @@
   function surprise() {
     const cards = [...els.cards.querySelectorAll(".card")];
     // Prefer ideas not done yet, unless the Done filter is what's showing.
-    const fresh = cards.filter((c) => !c.classList.contains("is-done"));
+    const fresh = cards.filter((c) => !isDone(c.dataset.id));
     const pool = fresh.length ? fresh : cards;
     if (!pool.length) return;
     const pick = pool[Math.floor(Math.random() * pool.length)];
@@ -330,8 +330,11 @@
 
   function refreshIdea(id) {
     if (view === "mine") {
-      // Keep an open review box: re-rendering would throw away what's being typed.
-      if (!els.mine.querySelector(".review-form:not([hidden])")) renderMine();
+      // While a review box is open, regrouping would throw away what's being typed,
+      // so update the buttons in place and regroup once it closes.
+      if (els.mine.querySelector(".review-form:not([hidden])")) {
+        els.mine.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
+      } else renderMine();
       return;
     }
     // The same idea can be in both New today and the main list, so update every copy.
@@ -379,6 +382,7 @@
     if (!card) return;
     if (e.target.closest(".review-cancel")) {
       card.querySelector(".review-form").hidden = true;
+      if (view === "mine") renderMine(); // Catch up on marks changed while it was open.
       return;
     }
     const mark = e.target.closest(".mark");

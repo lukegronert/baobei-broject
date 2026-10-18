@@ -99,7 +99,6 @@ window.baobeiAccount = (() => {
           idea_tags: idea.tags || [],
           idea_city: idea.city || null,
           idea_area: idea.area || null,
-          updated_at: new Date().toISOString(),
         });
 
     if (error) {

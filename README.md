@@ -27,7 +27,12 @@ One-time setup:
 
 1. Create a free Supabase project. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql).
 2. **Authentication → URL Configuration**: set Site URL to `https://lukegronert.github.io/baobei-broject/` and add it (plus `http://localhost:8000/` for local testing) to Redirect URLs.
-3. **Authentication → Users → Add user → Send invitation** for each person who should be able to sign in. Then **Authentication → Sign In / Providers**: turn off **Allow new users to sign up**, so nobody else can make an account.
+3. **Authentication → Users → Add user → Send invitation** for each person who should be able to sign in. Then let them save marks by running this in **SQL Editor** with their emails:
+   ```sql
+   insert into public.allowed_users (user_id)
+   select id from auth.users where email in ('you@example.com', 'partner@example.com');
+   ```
+   Also turn off **Authentication → Sign In / Providers → Allow new users to sign up**. Even if that's missed, a stranger who signs up can't save anything, because only `allowed_users` can.
 4. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
 
 Sign in with the link the site emails you.
@@ -41,7 +46,7 @@ curl -s "$SUPABASE_URL/rest/v1/idea_marks?select=idea_id,interest,visited,rating
   -H "apikey: $SUPABASE_ANON_KEY"
 ```
 
-Both values are in `config.js`. `interest` is `interested`, `not_interested` or null; `visited` is true once been there, and then `rating` (`up`, `down` or null) and `review` say how it went. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
+Both values are in `config.js`. `interest` is `interested`, `not_interested` or null; `visited` is true once been there, and then `rating` (`up`, `down` or null) and `review` (up to 2,000 characters) say how it went. A visited row can still carry the `interest` set before the visit: once `visited` is true, go by `rating` and `review` and ignore `interest`. Every row belongs to someone in `allowed_users`, so the scout doesn't need to filter by user. Reviews are readable by anyone with the anon key, so don't write anything private in them. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
 
 ## Run it locally
 
