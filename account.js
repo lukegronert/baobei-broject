@@ -30,7 +30,9 @@ window.baobeiAccount = (() => {
 
   const els = {
     root: document.getElementById("account"),
-    signIn: document.getElementById("sign-in"),
+    button: document.getElementById("account-button"),
+    initial: document.getElementById("account-initial"),
+    menu: document.getElementById("account-menu"),
     form: document.getElementById("sign-in-form"),
     // Found by type rather than id, so a page and script from different versions still match up.
     username: document.querySelector('#sign-in-form input:not([type="password"])'),
@@ -42,16 +44,32 @@ window.baobeiAccount = (() => {
   };
   els.root.hidden = false;
 
+  // The icon in the top right opens a small menu: the sign-in form, or who's signed in and Sign out.
+  function setMenu(open) {
+    els.menu.hidden = !open;
+    els.button.setAttribute("aria-expanded", String(open));
+    if (open && !user) els.username.focus();
+  }
+
+  // Messages live in the menu, so open it to show one (a failed save, say).
   function showMessage(text) {
     els.message.textContent = text || "";
     els.message.hidden = !text;
+    if (text) setMenu(true);
   }
 
   function renderAccount() {
-    els.signIn.hidden = user !== null;
+    const name = user ? user.email.replace(/@baobei\.local$/, "") : "";
+    els.form.hidden = user !== null;
     els.signedIn.hidden = user === null;
-    if (user) els.form.hidden = true;
-    els.who.textContent = user ? user.email.replace(/@baobei\.local$/, "") : "";
+    els.who.textContent = name;
+    els.initial.textContent = name.charAt(0).toUpperCase();
+    els.initial.hidden = !user;
+    els.button.querySelector(".account-icon").style.display = user ? "none" : "";
+    els.button.classList.toggle("signed-in", user !== null);
+    const label = user ? `Signed in as ${name}` : "Sign in";
+    els.button.setAttribute("aria-label", label);
+    els.button.title = label;
   }
 
   async function loadMarks(forUser) {
@@ -72,6 +90,7 @@ window.baobeiAccount = (() => {
     marks.clear();
     showMessage("");
     renderAccount();
+    setMenu(false);
     notify();
     // Supabase calls inside this callback can deadlock the auth client, so defer.
     if (user) setTimeout(() => loadMarks(user), 0);
@@ -111,9 +130,16 @@ window.baobeiAccount = (() => {
     }
   };
 
-  els.signIn.addEventListener("click", () => {
-    els.form.hidden = !els.form.hidden;
-    if (!els.form.hidden) els.username.focus();
+  els.button.addEventListener("click", () => setMenu(els.menu.hidden));
+  // Close on a click elsewhere or Escape.
+  document.addEventListener("click", (e) => {
+    if (!els.menu.hidden && !els.root.contains(e.target)) setMenu(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !els.menu.hidden) {
+      setMenu(false);
+      els.button.focus();
+    }
   });
 
   els.form.addEventListener("submit", async (e) => {

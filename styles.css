@@ -205,9 +205,40 @@ main, .site-header, .site-footer {
 /* Snapping would fight the slow drift, so it only applies while the row is still. */
 .today-cards.drifting { scroll-snap-type: none; }
 
-.account { margin-top: 8px; font-size: 0.9rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-.sign-in-form { display: flex; flex-wrap: wrap; gap: 8px; }
-.sign-in-form input, .sign-in-form button {
+.site-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
+.account { position: relative; flex: none; font-size: 0.9rem; color: var(--muted); }
+.account-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+.account-button.signed-in { background: var(--accent); border-color: var(--accent); color: #fff; }
+.account-initial { font-weight: 600; font-size: 1.05rem; }
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+  width: min(260px, calc(100vw - 32px));
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgba(43, 32, 36, 0.15);
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+}
+.sign-in-form { display: grid; gap: 8px; }
+.signed-in { display: grid; gap: 8px; color: var(--text); }
+.sign-in-form input, .sign-in-form button, .signed-in button {
   font: inherit;
   padding: 6px 12px;
   border-radius: 999px;
@@ -215,9 +246,9 @@ main, .site-header, .site-footer {
   background: var(--surface);
   color: var(--text);
 }
-.sign-in-form button { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
-.account-message { margin: 0; flex-basis: 100%; }
-.account[hidden], .sign-in-form[hidden], .account-message[hidden] { display: none; }
+.sign-in-form button, .signed-in button { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+.account-message { margin: 0; }
+.account[hidden], .account-menu[hidden], .sign-in-form[hidden], .signed-in[hidden], .account-message[hidden] { display: none; }
 
 .card-bottom { margin-top: auto; padding-top: 8px; }
 .card-bottom .links { margin-top: 0; padding-top: 0; }
@@ -275,4 +306,5 @@ main, .site-header, .site-footer {
 .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .mine { margin-top: 16px; }
 .mine-group { margin-bottom: 28px; }
+.mine-tabs { margin: 4px 0 16px; }
 .toggle[hidden] { display: none; }

@@ -19,6 +19,8 @@
     cards: document.getElementById("cards"),
     today: document.getElementById("today"),
     todayCards: document.getElementById("today-cards"),
+    coming: document.getElementById("coming"),
+    comingCards: document.getElementById("coming-cards"),
     empty: document.getElementById("empty"),
     template: document.getElementById("card-template"),
     tabs: document.getElementById("tabs"),
@@ -67,14 +69,28 @@
   const account = window.baobeiAccount;
   const isDone = (id) => (account.signedIn ? account.markFor(id).visited : done.has(id));
 
-  // My places, in order: [heading, test on a mark].
+  // My places tabs, in order: [label, test on a mark]. The first is shown by default.
   const MINE_GROUPS = [
+    ["Interested", (m) => !m.visited && m.interest === "interested"],
     ["Liked", (m) => m.visited && m.rating === "up"],
     ["Disliked", (m) => m.visited && m.rating === "down"],
-    ["Been there, not rated yet", (m) => m.visited && !m.rating],
-    ["Interested", (m) => !m.visited && m.interest === "interested"],
+    ["Been there", (m) => m.visited && !m.rating],
     ["Not interested", (m) => !m.visited && m.interest === "not_interested"],
   ];
+  let mineTab = MINE_GROUPS[0][0];
+
+  // The date a week from today in Taiwan, as YYYY-MM-DD.
+  const weekAhead = new Date(Date.parse(today + "T00:00:00Z") + 7 * 864e5).toISOString().slice(0, 10);
+
+  // Events starting in the next 7 days, or already on and ending in the next 7 days.
+  // Long-running ones that are simply open all week are left out so the row stays short.
+  const isComingUp = (idea) => {
+    if (idea.type !== "event" || !idea.start_date) return false;
+    const start = idea.start_date, end = idea.end_date || start;
+    if (end < today || start > weekAhead) return false;
+    return start >= today || end <= weekAhead;
+  };
+  const bySoonest = (a, b) => (a.start_date || "").localeCompare(b.start_date || "") || a.name.localeCompare(b.name);
 
   // Drop events and openings whose end date has already passed.
   const isCurrent = (idea) => !idea.end_date || idea.end_date >= today;
@@ -261,6 +277,12 @@
     els.today.hidden = fresh.length === 0;
   }
 
+  function renderComing() {
+    const soon = ideas.filter(isComingUp).sort(bySoonest);
+    els.comingCards.replaceChildren(...soon.map(renderCard));
+    els.coming.hidden = soon.length === 0;
+  }
+
   // Slowly drift the New today row to the right, then return to the start and go again.
   // Pauses while someone hovers, touches or tabs into it, and stays still for reduced motion.
   function startTodayAutoScroll() {
@@ -348,28 +370,71 @@
   els.reset.addEventListener("click", reset);
   els.surprise.addEventListener("click", surprise);
 
-  // A card for each idea in My places, grouped. Ideas gone from the file use the saved snapshot.
+  // My places: a row of tabs, one per group, and the chosen group's cards.
+  // Ideas gone from the file use the saved snapshot.
   function renderMine() {
     const entries = account.allMarks();
-    const groups = MINE_GROUPS.map(([title, test]) => {
-      const list = entries.filter(([, m]) => test(m)).map(([id, m]) =>
+    const lists = new Map(MINE_GROUPS.map(([title, test]) => [title,
+      entries.filter(([, m]) => test(m)).map(([id, m]) =>
         allIdeas.get(id) || { id, name: m.idea_name || id, type: m.idea_type, tags: m.idea_tags, city: m.idea_city, area: m.idea_area }
-      ).sort((a, b) => a.name.localeCompare(b.name));
-      if (!list.length) return null;
-      const section = document.createElement("section");
-      section.className = "mine-group";
+      ).sort((a, b) => a.name.localeCompare(b.name)),
+    ]));
+
+    const tabs = document.createElement("div");
+    tabs.className = "chips mine-tabs";
+    tabs.setAttribute("role", "group");
+    tabs.setAttribute("aria-label", "My places");
+    MINE_GROUPS.forEach(([title]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip mine-tab";
+      b.dataset.tab = title;
+      b.textContent = `${title} (${lists.get(title).length})`;
+      b.classList.toggle("active", title === mineTab);
+      b.setAttribute("aria-pressed", String(title === mineTab));
+      tabs.append(b);
+    });
+
+    const parts = [tabs];
+    const list = lists.get(mineTab);
+    // Interested events happening this week get their own row at the top of Interested.
+    const soon = mineTab === "Interested" ? list.filter(isComingUp).sort(bySoonest) : [];
+    if (soon.length) parts.push(mineSection("Coming Up", soon, "today-cards"));
+    if (list.length) parts.push(mineSection(soon.length ? `All ${mineTab.toLowerCase()}` : "", list, "cards"));
+    else {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = "Nothing here yet.";
+      parts.push(p);
+    }
+    els.mineGroups.replaceChildren(...parts);
+    els.mineGroups.hidden = entries.length === 0;
+    els.mineEmpty.hidden = entries.length > 0;
+  }
+
+  function mineSection(title, list, layout) {
+    const section = document.createElement("section");
+    section.className = "mine-group";
+    if (title) {
       const h = document.createElement("h2");
       h.className = "section-title";
-      h.textContent = `${title} (${list.length})`;
-      const cards = document.createElement("div");
-      cards.className = "cards";
-      cards.append(...list.map(renderCard));
-      section.append(h, cards);
-      return section;
-    }).filter(Boolean);
-    els.mineGroups.replaceChildren(...groups);
-    els.mineEmpty.hidden = groups.length > 0;
+      h.textContent = title;
+      section.append(h);
+    }
+    const cards = document.createElement("div");
+    cards.className = layout;
+    cards.append(...list.map(renderCard));
+    section.append(cards);
+    return section;
   }
+
+  els.mineGroups.addEventListener("click", (e) => {
+    const tab = e.target.closest(".mine-tab");
+    if (!tab) return;
+    mineTab = tab.dataset.tab;
+    renderMine();
+  });
+
 
   function showView(next) {
     view = account.signedIn ? next : "browse";
@@ -393,8 +458,9 @@
       } else renderMine();
       return;
     }
-    // The same idea can be in both New today and the main list, so update every copy.
-    els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
+    // The same idea can be in New today, Coming Up and the main list, so update every copy.
+    [els.todayCards, els.comingCards].forEach((row) =>
+      row.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id)));
     // Re-render only when the Saved filter could hide this card; otherwise update in place.
     if (els.saved.value === "all") els.cards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     else render();
@@ -452,8 +518,9 @@
   }
   els.cards.addEventListener("click", onToggle);
   els.todayCards.addEventListener("click", onToggle);
+  els.comingCards.addEventListener("click", onToggle);
   els.mine.addEventListener("click", onToggle);
-  [els.cards, els.todayCards, els.mine].forEach((el) => el.addEventListener("submit", onReviewSubmit));
+  [els.cards, els.todayCards, els.comingCards, els.mine].forEach((el) => el.addEventListener("submit", onReviewSubmit));
 
   els.tabs.addEventListener("click", (e) => {
     const tab = e.target.closest(".tab");
@@ -465,6 +532,7 @@
     // Signed in or out, or the whole list loaded.
     showView(view);
     renderToday();
+    renderComing();
     render();
   });
 
@@ -481,6 +549,7 @@
       fillSelect(els.city, sortedCities(), "Everywhere");
       refreshAreas();
       renderToday();
+      renderComing();
       render();
       if (view === "mine") renderMine();
     })

@@ -7,24 +7,31 @@
   <meta name="description" content="Date ideas in Taipei and around Taiwan: activities, restaurants, places and events.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
   <!-- Bump ?v= on these files whenever they change, so browsers don't mix a cached old copy with the new page. -->
-  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <header class="site-header">
-    <h1>Baobei 圖書館</h1>
-    <p class="tagline">Things to do together in Taipei and around Taiwan</p>
+    <div class="header-text">
+      <h1>Baobei 圖書館</h1>
+      <p class="tagline">Things to do together in Taipei and around Taiwan</p>
+    </div>
     <div id="account" class="account" hidden>
-      <button id="sign-in" class="link-button" type="button">Sign in</button>
-      <form id="sign-in-form" class="sign-in-form" hidden>
-        <input id="sign-in-username" type="text" required autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Username" aria-label="Username">
-        <input id="sign-in-password" type="password" required autocomplete="current-password" placeholder="Password" aria-label="Password">
-        <button type="submit">Sign in</button>
-      </form>
-      <span id="signed-in" hidden>
-        <span id="account-email"></span>
-        <button id="sign-out" class="link-button" type="button">Sign out</button>
-      </span>
-      <p id="account-message" class="account-message" aria-live="polite" hidden></p>
+      <button id="account-button" class="account-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="account-menu" aria-label="Sign in" title="Sign in">
+        <svg class="account-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        <span id="account-initial" class="account-initial" hidden></span>
+      </button>
+      <div id="account-menu" class="account-menu" hidden>
+        <form id="sign-in-form" class="sign-in-form">
+          <input id="sign-in-username" type="text" required autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Username" aria-label="Username">
+          <input id="sign-in-password" type="password" required autocomplete="current-password" placeholder="Password" aria-label="Password">
+          <button type="submit">Sign in</button>
+        </form>
+        <div id="signed-in" class="signed-in" hidden>
+          <span>Signed in as <strong id="account-email"></strong></span>
+          <button id="sign-out" type="button">Sign out</button>
+        </div>
+        <p id="account-message" class="account-message" aria-live="polite" hidden></p>
+      </div>
     </div>
   </header>
 
@@ -112,6 +119,11 @@
       <div id="today-cards" class="today-cards"></div>
     </section>
 
+    <section id="coming" class="today" aria-labelledby="coming-title" hidden>
+      <h2 id="coming-title" class="section-title">Coming Up</h2>
+      <div id="coming-cards" class="today-cards"></div>
+    </section>
+
     <section id="cards" class="cards" aria-label="Date ideas"></section>
     <p id="empty" class="empty" hidden>No ideas match those filters yet.</p>
     </div>
@@ -165,7 +177,7 @@
 
   <script src="config.js?v=2"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
-  <script src="account.js?v=2"></script>
-  <script src="app.js?v=3"></script>
+  <script src="account.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
