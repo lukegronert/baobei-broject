@@ -12,6 +12,42 @@ A **New today** row above the list shows every idea whose `added_at` is today, r
 
 Dates are compared against today's date in Taiwan (Asia/Taipei), so past events drop off at midnight Taipei time wherever you open the site.
 
+## Sign-in, been here, ratings and reviews
+
+Signing in adds a row of buttons to every card:
+
+- **Interested** / **Not interested**, for places you haven't been yet.
+- **📍 Been here**. Once marked, the card offers **👍** / **👎** and a written **review** instead. Un-marking it clears the rating and review.
+
+Signed in, Been here replaces the browser-only ✓ done mark, and a **My places** tab lists everything you've marked, grouped into Liked, Disliked, Been there (not rated), Interested and Not interested.
+
+Marks are saved to a free [Supabase](https://supabase.com) project, so they follow you across devices and the morning scout can read them. Until `config.js` has a project URL and key, the sign-in link stays hidden and the site works as before.
+
+One-time setup:
+
+1. Create a free Supabase project. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql).
+2. **Authentication → URL Configuration**: set Site URL to `https://lukegronert.github.io/baobei-broject/` and add it (plus `http://localhost:8000/` for local testing) to Redirect URLs.
+3. **Authentication → Users → Add user → Send invitation** for each person who should be able to sign in. Then let them save marks by running this in **SQL Editor** with their emails:
+   ```sql
+   insert into public.allowed_users (user_id)
+   select id from auth.users where email in ('you@example.com', 'partner@example.com');
+   ```
+   Also turn off **Authentication → Sign In / Providers → Allow new users to sign up**. Even if that's missed, a stranger who signs up can't save anything, because only `allowed_users` can.
+4. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
+
+Sign in with the link the site emails you.
+
+### Reading marks (for the morning scout)
+
+Anyone with the anon key can read marks, with no sign-in:
+
+```sh
+curl -s "$SUPABASE_URL/rest/v1/idea_marks?select=idea_id,interest,visited,rating,review,idea_name,idea_type,idea_tags,idea_city,idea_area,updated_at&order=updated_at.desc" \
+  -H "apikey: $SUPABASE_ANON_KEY"
+```
+
+Both values are in `config.js`. `interest` is `interested`, `not_interested` or null; `visited` is true once been there, and then `rating` (`up`, `down` or null) and `review` (up to 2,000 characters) say how it went. A visited row can still carry the `interest` set before the visit: once `visited` is true, go by `rating` and `review` and ignore `interest`. Every row belongs to someone in `allowed_users`, so the scout doesn't need to filter by user. Reviews are readable by anyone with the anon key, so don't write anything private in them. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
+
 ## Run it locally
 
 ```sh

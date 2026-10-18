@@ -202,3 +202,75 @@ main, .site-header, .site-footer {
   scroll-snap-type: x proximity;
 }
 .today-cards .card { scroll-snap-align: start; }
+
+.account { margin-top: 8px; font-size: 0.9rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.sign-in-form { display: flex; flex-wrap: wrap; gap: 8px; }
+.sign-in-form input, .sign-in-form button {
+  font: inherit;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+.sign-in-form button { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); cursor: pointer; }
+.account-message { margin: 0; flex-basis: 100%; }
+.account[hidden], .sign-in-form[hidden], .account-message[hidden] { display: none; }
+
+.card-bottom { margin-top: auto; padding-top: 8px; }
+.card-bottom .links { margin-top: 0; padding-top: 0; }
+
+.marks { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 10px; border-top: 1px solid var(--border); margin-top: 6px; }
+.marks[hidden], .mark[hidden], .my-review[hidden], .review-form[hidden] { display: none; }
+.mark {
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.mark[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.mark[data-mark="up"][aria-pressed="true"] { border-color: var(--new); background: var(--new-soft); }
+.mark[data-mark="down"][aria-pressed="true"] { border-color: var(--trending); background: var(--trending-soft); }
+
+.my-review { margin: 4px 0 0; font-style: italic; }
+.review-form { display: grid; gap: 6px; margin-top: 6px; }
+.review-form textarea {
+  font: inherit;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+.review-actions { display: flex; align-items: center; gap: 12px; }
+.review-actions button[type="submit"] {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.tabs { display: flex; gap: 6px; margin-top: 16px; }
+.tabs[hidden] { display: none; }
+.tab {
+  font: inherit;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.mine { margin-top: 16px; }
+.mine-group { margin-bottom: 28px; }
+.toggle[hidden] { display: none; }

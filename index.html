@@ -12,9 +12,27 @@
   <header class="site-header">
     <h1>Baobei Date Ideas</h1>
     <p class="tagline">Things to do together in Taipei and around Taiwan</p>
+    <div id="account" class="account" hidden>
+      <button id="sign-in" class="link-button" type="button">Sign in</button>
+      <form id="sign-in-form" class="sign-in-form" hidden>
+        <input id="sign-in-email" type="email" required autocomplete="email" placeholder="Your email" aria-label="Email">
+        <button type="submit">Email me a link</button>
+      </form>
+      <span id="signed-in" hidden>
+        <span id="account-email"></span>
+        <button id="sign-out" class="link-button" type="button">Sign out</button>
+      </span>
+      <p id="account-message" class="account-message" aria-live="polite" hidden></p>
+    </div>
   </header>
 
   <main>
+    <nav id="tabs" class="tabs" role="tablist" hidden>
+      <button class="tab active" data-view="browse" type="button" role="tab" aria-selected="true">All ideas</button>
+      <button class="tab" data-view="mine" type="button" role="tab" aria-selected="false">My places</button>
+    </nav>
+
+    <div id="browse">
     <section class="filters" aria-label="Filters">
       <div class="filter-row">
         <input id="search" type="search" placeholder="Search ideas, tags, areas…" aria-label="Search">
@@ -94,6 +112,12 @@
 
     <section id="cards" class="cards" aria-label="Date ideas"></section>
     <p id="empty" class="empty" hidden>No ideas match those filters yet.</p>
+    </div>
+
+    <section id="mine" class="mine" aria-label="My places" hidden>
+      <div id="mine-groups"></div>
+      <p id="mine-empty" class="empty" hidden>Nothing here yet. Mark ideas as Interested, Not interested or Been here and they'll show up in this tab.</p>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -115,10 +139,31 @@
       <p class="dates" hidden></p>
       <p class="description"></p>
       <ul class="tags"></ul>
-      <div class="links"></div>
+      <div class="card-bottom">
+        <div class="links"></div>
+      </div>
+      <p class="my-review" hidden></p>
+      <form class="review-form" hidden>
+        <textarea rows="3" maxlength="2000" aria-label="Your review" placeholder="How was it?"></textarea>
+        <span class="review-actions">
+          <button type="submit">Save review</button>
+          <button class="review-cancel link-button" type="button">Cancel</button>
+        </span>
+      </form>
+      <div class="marks" hidden>
+        <button class="mark" data-mark="interested" type="button" aria-pressed="false">Interested</button>
+        <button class="mark" data-mark="not_interested" type="button" aria-pressed="false">Not interested</button>
+        <button class="mark" data-mark="visited" type="button" aria-pressed="false">📍 Been here</button>
+        <button class="mark" data-mark="up" type="button" aria-pressed="false" title="Liked it" aria-label="Liked it">👍</button>
+        <button class="mark" data-mark="down" type="button" aria-pressed="false" title="Didn't like it" aria-label="Didn't like it">👎</button>
+        <button class="mark review" data-mark="review" type="button">✎ Review</button>
+      </div>
     </article>
   </template>
 
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+  <script src="account.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
