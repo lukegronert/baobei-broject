@@ -1012,5 +1012,92 @@
     "status": "classic",
     "added_at": "2026-10-18",
     "source": "https://en.wikipedia.org/wiki/Fulong_Beach"
+  },
+  {
+    "id": "sou-fujimoto-exhibition-jut-art-museum",
+    "name": "Sou Fujimoto: Primordial Future Forest (藤本壯介建築展)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Da'an",
+    "price": 1,
+    "tags": [
+      "art",
+      "architecture",
+      "exhibition",
+      "indoor"
+    ],
+    "description": "Over 100 models and sketches from architect Sou Fujimoto, plus a 1:5 model of the Osaka Expo Grand Ring at the nearby Chien-kuo Beer Factory warehouse. One ticket covers both, so it makes an easy afternoon of wandering.",
+    "url": "https://www.taiwannews.com.tw/zh/news/6408721",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Jut+Art+Museum+Taipei",
+    "status": "new",
+    "start_date": "2026-08-15",
+    "end_date": "2027-01-03",
+    "added_at": "2026-10-18",
+    "source": "https://www.taiwannews.com.tw/zh/news/6408721"
+  },
+  {
+    "id": "the-fear-exhibition-taipei",
+    "name": "The Fear Exhibition (恐怖心展)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 2,
+    "tags": [
+      "exhibition",
+      "immersive",
+      "spooky",
+      "indoor"
+    ],
+    "description": "A hit Japanese immersive exhibition about everyday fears, in an underground space near Zhongshan MRT. Good for a fun, slightly creepy date night, open until 9pm.",
+    "url": "https://www.klook.com/zh-TW/activity/229309-the-fear-exhibition/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E7%81%B0%E6%A3%9A+%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E4%B8%AD%E5%B1%B1%E5%8C%97%E8%B7%AF%E4%BA%8C%E6%AE%B559%E5%B7%B716%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-09-12",
+    "end_date": "2026-11-23",
+    "added_at": "2026-10-18",
+    "source": "https://supertaste.tvbs.com.tw/hot/361054"
+  },
+  {
+    "id": "taipei-coffee-festival-2026",
+    "name": "Taipei Coffee Festival 2026 (臺北咖啡節)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 1,
+    "tags": [
+      "coffee",
+      "festival",
+      "outdoor",
+      "food"
+    ],
+    "description": "60+ coffee brands from Taiwan and around Asia across two plazas at Taipei Expo Park, with tastings, coffee cocktails and mocktails. Bring your own cup.",
+    "url": "https://www.klook.com/en-SG/activity/238945-flavor-beyond-borders/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Taipei+Expo+Park+Yuanshan",
+    "status": "new",
+    "start_date": "2026-12-03",
+    "end_date": "2026-12-06",
+    "added_at": "2026-10-18",
+    "source": "https://www.klook.com/en-SG/activity/238945-flavor-beyond-borders/"
+  },
+  {
+    "id": "breaday-daan",
+    "name": "BREADAY",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Da'an",
+    "price": 1,
+    "tags": [
+      "bakery",
+      "cafe",
+      "coffee",
+      "breakfast"
+    ],
+    "description": "Kumamoto's popular bakery opened its first Taiwan shop next to Daan Forest Park, with sourdough, croissants and FUGLEN coffee. Grab pastries and walk over to the park.",
+    "url": "https://travel.udn.com/travel/story/7186/9781578",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=BREADAY+%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%92%8C%E5%B9%B3%E6%9D%B1%E8%B7%AF%E4%BA%8C%E6%AE%B518%E4%B9%8B9%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-10-01",
+    "added_at": "2026-10-18",
+    "source": "https://travel.udn.com/travel/story/7186/9781578"
   }
 ]
