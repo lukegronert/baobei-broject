@@ -136,7 +136,7 @@
     "name": "Yangmingshan silvergrass season",
     "type": "event",
     "city": "Taipei",
-    "area": "Beitou",
+    "area": "Yangmingshan",
     "price": 1,
     "tags": [
       "hiking",
@@ -216,8 +216,8 @@
     "source": "https://guide.michelin.com/tw/en/article/michelin-guide-ceremony/taiwan-full-list"
   },
   {
-    "id": "jing-hua-xuan",
-    "name": "Jing Hua Xuan",
+    "id": "silks-house-jing-hua-xuan",
+    "name": "Silks House (Jing Hua Xuan)",
     "type": "restaurant",
     "city": "Taipei",
     "area": "Zhongshan",
@@ -228,7 +228,7 @@
       "michelin",
       "hotel"
     ],
-    "description": "Cantonese restaurant at the Regent Taipei that earned its first Michelin star in 2026. Great for a dim sum lunch date.",
+    "description": "Silks House (晶華軒), the Cantonese restaurant at the Regent Taipei, earned its first Michelin star in 2026. Great for a dim sum lunch date.",
     "url": "https://www.taiwannews.com.tw/zh/news/6405048",
     "maps_url": "https://www.google.com/maps/search/?api=1&query=%E6%99%B6%E8%8F%AF%E8%BB%92+Regent+Taipei",
     "status": "new",
@@ -336,7 +336,7 @@
     "source": "https://guide.michelin.com/tw/en/article/dining-out/best-new-restaurants-in-taiwan-2026"
   },
   {
-    "id": "aufglet-caf-taipei",
+    "id": "aufglet-cafe-taipei",
     "name": "AUFGLET Café Taipei",
     "type": "restaurant",
     "city": "Taipei",
