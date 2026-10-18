@@ -304,4 +304,5 @@ main, .site-header, .site-footer {
 .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .mine { margin-top: 16px; }
 .mine-group { margin-bottom: 28px; }
+.mine-tabs { margin: 4px 0 16px; }
 .toggle[hidden] { display: none; }
