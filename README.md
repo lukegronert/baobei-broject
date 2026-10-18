@@ -26,16 +26,15 @@ Marks are saved to a free [Supabase](https://supabase.com) project, so they foll
 One-time setup:
 
 1. Create a free Supabase project. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql).
-2. **Authentication → URL Configuration**: set Site URL to `https://lukegronert.github.io/baobei-broject/` and add it (plus `http://localhost:8000/` for local testing) to Redirect URLs.
-3. **Authentication → Users → Add user → Send invitation** for each person who should be able to sign in. Then let them save marks by running this in **SQL Editor** with their emails:
+2. **Authentication → Users → Add user → Create new user** for each person who should be able to sign in: an email and a password, with **Auto Confirm User** ticked. Supabase stores the password hashed. Then let them save marks by running this in **SQL Editor** with their emails:
    ```sql
    insert into public.allowed_users (user_id)
    select id from auth.users where email in ('you@example.com', 'partner@example.com');
    ```
    Also turn off **Authentication → Sign In / Providers → Allow new users to sign up**. Even if that's missed, a stranger who signs up can't save anything, because only `allowed_users` can.
-4. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
+3. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
 
-Sign in with the link the site emails you.
+Sign in on the site with that email and password.
 
 ### Reading marks (for the morning scout)
 
