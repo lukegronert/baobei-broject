@@ -19,6 +19,8 @@
     cards: document.getElementById("cards"),
     today: document.getElementById("today"),
     todayCards: document.getElementById("today-cards"),
+    coming: document.getElementById("coming"),
+    comingCards: document.getElementById("coming-cards"),
     empty: document.getElementById("empty"),
     template: document.getElementById("card-template"),
     tabs: document.getElementById("tabs"),
@@ -75,6 +77,19 @@
     ["Interested", (m) => !m.visited && m.interest === "interested"],
     ["Not interested", (m) => !m.visited && m.interest === "not_interested"],
   ];
+
+  // The date a week from today in Taiwan, as YYYY-MM-DD.
+  const weekAhead = new Date(Date.parse(today + "T00:00:00Z") + 7 * 864e5).toISOString().slice(0, 10);
+
+  // Events starting in the next 7 days, or already on and ending in the next 7 days.
+  // Long-running ones that are simply open all week are left out so the row stays short.
+  const isComingUp = (idea) => {
+    if (idea.type !== "event" || !idea.start_date) return false;
+    const start = idea.start_date, end = idea.end_date || start;
+    if (end < today || start > weekAhead) return false;
+    return start >= today || end <= weekAhead;
+  };
+  const bySoonest = (a, b) => (a.start_date || "").localeCompare(b.start_date || "") || a.name.localeCompare(b.name);
 
   // Drop events and openings whose end date has already passed.
   const isCurrent = (idea) => !idea.end_date || idea.end_date >= today;
@@ -261,6 +276,12 @@
     els.today.hidden = fresh.length === 0;
   }
 
+  function renderComing() {
+    const soon = ideas.filter(isComingUp).sort(bySoonest);
+    els.comingCards.replaceChildren(...soon.map(renderCard));
+    els.coming.hidden = soon.length === 0;
+  }
+
   function render() {
     const list = ideas.filter(matches).sort(comparators[els.sort.value] || comparators.featured);
     els.cards.replaceChildren(...list.map(renderCard));
@@ -295,10 +316,17 @@
   // A card for each idea in My places, grouped. Ideas gone from the file use the saved snapshot.
   function renderMine() {
     const entries = account.allMarks();
-    const groups = MINE_GROUPS.map(([title, test]) => {
-      const list = entries.filter(([, m]) => test(m)).map(([id, m]) =>
+    // Events you're interested in that are coming up this week, ahead of the usual groups.
+    const soon = entries
+      .filter(([id, m]) => !m.visited && m.interest === "interested" && allIdeas.has(id) && isComingUp(allIdeas.get(id)))
+      .map(([id]) => allIdeas.get(id)).sort(bySoonest);
+    const groups = [["Coming Up", soon, "today-cards"]].concat(MINE_GROUPS.map(([title, test]) => [
+      title,
+      entries.filter(([, m]) => test(m)).map(([id, m]) =>
         allIdeas.get(id) || { id, name: m.idea_name || id, type: m.idea_type, tags: m.idea_tags, city: m.idea_city, area: m.idea_area }
-      ).sort((a, b) => a.name.localeCompare(b.name));
+      ).sort((a, b) => a.name.localeCompare(b.name)),
+      "cards",
+    ])).map(([title, list, layout]) => {
       if (!list.length) return null;
       const section = document.createElement("section");
       section.className = "mine-group";
@@ -306,7 +334,7 @@
       h.className = "section-title";
       h.textContent = `${title} (${list.length})`;
       const cards = document.createElement("div");
-      cards.className = "cards";
+      cards.className = layout;
       cards.append(...list.map(renderCard));
       section.append(h, cards);
       return section;
@@ -337,8 +365,9 @@
       } else renderMine();
       return;
     }
-    // The same idea can be in both New today and the main list, so update every copy.
-    els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
+    // The same idea can be in New today, Coming Up and the main list, so update every copy.
+    [els.todayCards, els.comingCards].forEach((row) =>
+      row.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id)));
     // Re-render only when the Saved filter could hide this card; otherwise update in place.
     if (els.saved.value === "all") els.cards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     else render();
@@ -396,8 +425,9 @@
   }
   els.cards.addEventListener("click", onToggle);
   els.todayCards.addEventListener("click", onToggle);
+  els.comingCards.addEventListener("click", onToggle);
   els.mine.addEventListener("click", onToggle);
-  [els.cards, els.todayCards, els.mine].forEach((el) => el.addEventListener("submit", onReviewSubmit));
+  [els.cards, els.todayCards, els.comingCards, els.mine].forEach((el) => el.addEventListener("submit", onReviewSubmit));
 
   els.tabs.addEventListener("click", (e) => {
     const tab = e.target.closest(".tab");
@@ -409,6 +439,7 @@
     // Signed in or out, or the whole list loaded.
     showView(view);
     renderToday();
+    renderComing();
     render();
   });
 
@@ -423,6 +454,7 @@
       fillSelect(els.city, sortedCities(), "Everywhere");
       refreshAreas();
       renderToday();
+      renderComing();
       render();
       if (view === "mine") renderMine();
     })
