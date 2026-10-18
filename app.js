@@ -11,10 +11,14 @@
     area: document.getElementById("area"),
     price: document.getElementById("price"),
     status: document.getElementById("status"),
+    saved: document.getElementById("saved"),
     sort: document.getElementById("sort"),
     count: document.getElementById("count"),
     reset: document.getElementById("reset"),
+    surprise: document.getElementById("surprise"),
     cards: document.getElementById("cards"),
+    today: document.getElementById("today"),
+    todayCards: document.getElementById("today-cards"),
     empty: document.getElementById("empty"),
     template: document.getElementById("card-template"),
   };
@@ -22,7 +26,33 @@
   let ideas = [];
   let type = "all";
 
-  const today = new Date().toISOString().slice(0, 10);
+  // Today's date in Taiwan as YYYY-MM-DD, whatever the viewer's own time zone.
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(new Date());
+
+  // Favorites and done marks live in this browser only.
+  const STORAGE_KEYS = { favorites: "baobei.favorites", done: "baobei.done" };
+
+  function loadSet(key) {
+    try {
+      const ids = JSON.parse(localStorage.getItem(key) || "[]");
+      return new Set(Array.isArray(ids) ? ids : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function saveSet(key, set) {
+    try {
+      localStorage.setItem(key, JSON.stringify([...set]));
+    } catch {
+      // Storage blocked (private mode etc.): marks still work until the page reloads.
+    }
+  }
+
+  const favorites = loadSet(STORAGE_KEYS.favorites);
+  const done = loadSet(STORAGE_KEYS.done);
 
   // Drop events and openings whose end date has already passed.
   const isCurrent = (idea) => !idea.end_date || idea.end_date >= today;
@@ -72,6 +102,9 @@
     if (els.area.value !== "all" && idea.area !== els.area.value) return false;
     if (els.price.value !== "all" && (idea.price || 0) > Number(els.price.value)) return false;
     if (els.status.value !== "all" && idea.status !== els.status.value) return false;
+    if (els.saved.value === "favorites" && !favorites.has(idea.id)) return false;
+    if (els.saved.value === "todo" && done.has(idea.id)) return false;
+    if (els.saved.value === "done" && !done.has(idea.id)) return false;
     const q = els.search.value.trim().toLowerCase();
     if (q) {
       const hay = [idea.name, idea.description, idea.city, idea.area, ...(idea.tags || [])]
@@ -136,7 +169,49 @@
     const links = node.querySelector(".links");
     if (idea.url) links.append(link(idea.url, "Website"));
     if (idea.maps_url) links.append(link(idea.maps_url, "Map"));
+
+    node.dataset.id = idea.id;
+    setToggles(node, idea.id);
     return node;
+  }
+
+  function setToggles(node, id) {
+    const isFav = favorites.has(id), isDone = done.has(id);
+    const fav = node.querySelector(".toggle.fav");
+    fav.textContent = isFav ? "♥" : "♡";
+    fav.setAttribute("aria-pressed", String(isFav));
+    fav.title = isFav ? "Remove from favorites" : "Add to favorites";
+    fav.setAttribute("aria-label", fav.title);
+    const doneBtn = node.querySelector(".toggle.done");
+    doneBtn.setAttribute("aria-pressed", String(isDone));
+    doneBtn.title = isDone ? "Mark as not done" : "Mark as done";
+    doneBtn.setAttribute("aria-label", doneBtn.title);
+    node.classList.toggle("is-done", isDone);
+  }
+
+  function toggleMark(set, key, id) {
+    if (set.has(id)) set.delete(id);
+    else set.add(id);
+    saveSet(key, set);
+  }
+
+  function surprise() {
+    const cards = [...els.cards.querySelectorAll(".card")];
+    // Prefer ideas not done yet, unless the Done filter is what's showing.
+    const fresh = cards.filter((c) => !c.classList.contains("is-done"));
+    const pool = fresh.length ? fresh : cards;
+    if (!pool.length) return;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    cards.forEach((c) => c.classList.remove("picked"));
+    pick.classList.add("picked");
+    pick.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  // Ideas the scout added today, shown above the filters' results whatever they are.
+  function renderToday() {
+    const fresh = ideas.filter((i) => i.added_at === today).sort(comparators.featured);
+    els.todayCards.replaceChildren(...fresh.map(renderCard));
+    els.today.hidden = fresh.length === 0;
   }
 
   function render() {
@@ -144,13 +219,14 @@
     els.cards.replaceChildren(...list.map(renderCard));
     els.empty.hidden = list.length > 0;
     els.count.textContent = `${list.length} idea${list.length === 1 ? "" : "s"}`;
+    els.surprise.disabled = list.length === 0;
   }
 
   function reset() {
     type = "all";
     els.typeChips.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c.dataset.value === "all"));
     els.search.value = "";
-    [els.city, els.price, els.status].forEach((s) => (s.value = "all"));
+    [els.city, els.price, els.status, els.saved].forEach((s) => (s.value = "all"));
     els.sort.value = "featured";
     refreshAreas();
     render();
@@ -164,9 +240,25 @@
     render();
   });
   els.city.addEventListener("change", () => { refreshAreas(); render(); });
-  [els.area, els.price, els.status, els.sort].forEach((s) => s.addEventListener("change", render));
+  [els.area, els.price, els.status, els.saved, els.sort].forEach((s) => s.addEventListener("change", render));
   els.search.addEventListener("input", render);
   els.reset.addEventListener("click", reset);
+  els.surprise.addEventListener("click", surprise);
+
+  function onToggle(e) {
+    const btn = e.target.closest(".toggle");
+    if (!btn) return;
+    const id = btn.closest(".card").dataset.id;
+    if (btn.classList.contains("fav")) toggleMark(favorites, STORAGE_KEYS.favorites, id);
+    else toggleMark(done, STORAGE_KEYS.done, id);
+    // The same idea can be in both New today and the main list, so update every copy.
+    els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
+    // Re-render only when the Saved filter could hide this card; otherwise update in place.
+    if (els.saved.value === "all") els.cards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
+    else render();
+  }
+  els.cards.addEventListener("click", onToggle);
+  els.todayCards.addEventListener("click", onToggle);
 
   fetch("data/ideas.json", { cache: "no-cache" })
     .then((r) => {
@@ -177,6 +269,7 @@
       ideas = data.filter(isCurrent);
       fillSelect(els.city, sortedCities(), "Everywhere");
       refreshAreas();
+      renderToday();
       render();
     })
     .catch((err) => {

@@ -4,6 +4,14 @@ Date ideas for Taipei and around Taiwan: activities, restaurants, places to visi
 
 It's a plain static site (`index.html`, `styles.css`, `app.js`) with no build step. All ideas live in [`data/ideas.json`](data/ideas.json).
 
+## Favorites, done and surprise me
+
+Each card has a heart (favorite) and a check (done). These marks are saved in the browser's `localStorage`, so they stay on that device and browser only. The **Saved** filter shows favorites, ideas not done yet, or done ones. **Surprise me** highlights a random idea from whatever the current filters show, skipping ones marked done when it can.
+
+A **New today** row above the list shows every idea whose `added_at` is today, regardless of filters, and hides itself when nothing was added.
+
+Dates are compared against today's date in Taiwan (Asia/Taipei), so past events drop off at midnight Taipei time wherever you open the site.
+
 ## Run it locally
 
 ```sh
