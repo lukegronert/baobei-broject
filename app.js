@@ -283,6 +283,62 @@
     els.coming.hidden = soon.length === 0;
   }
 
+  // Slowly drift the New today row to the right, then return to the start and go again.
+  // Pauses while someone hovers, touches or tabs into it, and stays still for reduced motion.
+  function startTodayAutoScroll() {
+    const row = els.todayCards;
+    const SPEED = 25; // pixels per second
+    const END_PAUSE = 2000; // ms to rest at the end before going back
+    const TOUCH_RESUME = 4000; // ms after a touch ends before drifting again
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let hovering = false, touchedUntil = 0, restUntil = 0, returnPending = false;
+    let pos = null, last = null;
+
+    // Keyboard focus or typing in a review form holds the row still; a clicked button doesn't.
+    const focusHeld = () => {
+      const el = document.activeElement;
+      return row.contains(el) && el.matches(":focus-visible, input, textarea, select");
+    };
+
+    // Mouse only: on phones a tap fires a hover that never ends, so touches are timed instead.
+    row.addEventListener("pointerenter", (e) => (hovering = e.pointerType === "mouse"));
+    row.addEventListener("pointerleave", () => (hovering = false));
+    row.addEventListener("touchstart", () => (touchedUntil = Infinity), { passive: true });
+    const touchDone = () => (touchedUntil = performance.now() + TOUCH_RESUME);
+    row.addEventListener("touchend", touchDone, { passive: true });
+    row.addEventListener("touchcancel", touchDone, { passive: true });
+
+    function step(now) {
+      const dt = last === null ? 0 : Math.min(now - last, 100);
+      last = now;
+      const max = row.scrollWidth - row.clientWidth;
+      const paused = hovering || focusHeld() || now < touchedUntil || now < restUntil ||
+        reduceMotion.matches || els.today.hidden || max <= 0;
+      row.classList.toggle("drifting", !paused);
+      if (paused) {
+        pos = null; // pick up from wherever the person left it
+      } else {
+        // Follow any scroll that didn't come from the drift (scrollbar drag, Surprise me, etc.).
+        if (pos === null || Math.abs(row.scrollLeft - pos) > 2) pos = row.scrollLeft;
+        if (returnPending) {
+          // Rested at the end; glide back and give the glide time to finish.
+          returnPending = false;
+          pos = null;
+          restUntil = now + 1500;
+          row.scrollTo({ left: 0, behavior: "smooth" });
+        } else if (pos >= max - 1) {
+          returnPending = true;
+          restUntil = now + END_PAUSE;
+        } else {
+          pos = Math.min(max, pos + (SPEED * dt) / 1000);
+          row.scrollLeft = pos;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function render() {
     const list = ideas.filter(matches).sort(comparators[els.sort.value] || comparators.featured);
     els.cards.replaceChildren(...list.map(renderCard));
@@ -479,6 +535,8 @@
     renderComing();
     render();
   });
+
+  startTodayAutoScroll();
 
   fetch("data/ideas.json", { cache: "no-cache" })
     .then((r) => {

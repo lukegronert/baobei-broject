@@ -202,6 +202,8 @@ main, .site-header, .site-footer {
   scroll-snap-type: x proximity;
 }
 .today-cards .card { scroll-snap-align: start; }
+/* Snapping would fight the slow drift, so it only applies while the row is still. */
+.today-cards.drifting { scroll-snap-type: none; }
 
 .site-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 
