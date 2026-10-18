@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baobei Date Ideas</title>
+  <meta name="description" content="Date ideas in Taipei and around Taiwan: activities, restaurants, places and events.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Baobei Date Ideas</h1>
+    <p class="tagline">Things to do together in Taipei and around Taiwan</p>
+  </header>
+
+  <main>
+    <section class="filters" aria-label="Filters">
+      <div class="filter-row">
+        <input id="search" type="search" placeholder="Search ideas, tags, areas…" aria-label="Search">
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">Type</span>
+        <div class="chips" id="type-chips" role="group" aria-label="Type">
+          <button class="chip active" data-value="all">All</button>
+          <button class="chip" data-value="activity">Activities</button>
+          <button class="chip" data-value="restaurant">Restaurants</button>
+          <button class="chip" data-value="place">Places</button>
+          <button class="chip" data-value="event">Events</button>
+        </div>
+      </div>
+
+      <div class="filter-row selects">
+        <label>City
+          <select id="city">
+            <option value="all">Everywhere</option>
+          </select>
+        </label>
+        <label>Area
+          <select id="area">
+            <option value="all">All areas</option>
+          </select>
+        </label>
+        <label>Price
+          <select id="price">
+            <option value="all">Any price</option>
+            <option value="1">$</option>
+            <option value="2">$$ or less</option>
+            <option value="3">$$$ or less</option>
+            <option value="4">$$$$ or less</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="status">
+            <option value="all">Everything</option>
+            <option value="new">New</option>
+            <option value="trending">Trending</option>
+            <option value="classic">Classics</option>
+          </select>
+        </label>
+        <label>Sort
+          <select id="sort">
+            <option value="featured">New &amp; trending first</option>
+            <option value="recent">Recently added</option>
+            <option value="soonest">Happening soonest</option>
+            <option value="price">Price, low to high</option>
+            <option value="name">Name</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="filter-row summary">
+        <span id="count" aria-live="polite"></span>
+        <button id="reset" class="link-button" type="button">Reset filters</button>
+      </div>
+    </section>
+
+    <section id="cards" class="cards" aria-label="Date ideas"></section>
+    <p id="empty" class="empty" hidden>No ideas match those filters yet.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Updated by a morning scout that looks for new openings, upcoming events and trending spots.</p>
+  </footer>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="card-top">
+        <span class="type"></span>
+        <span class="badges"></span>
+      </div>
+      <h2 class="name"></h2>
+      <p class="meta"></p>
+      <p class="dates" hidden></p>
+      <p class="description"></p>
+      <ul class="tags"></ul>
+      <div class="links"></div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
