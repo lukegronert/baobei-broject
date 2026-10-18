@@ -12,9 +12,16 @@ A **New today** row above the list shows every idea whose `added_at` is today, r
 
 Dates are compared against today's date in Taiwan (Asia/Taipei), so past events drop off at midnight Taipei time wherever you open the site.
 
-## Sign-in, likes and dislikes
+## Sign-in, been here, ratings and reviews
 
-Signing in shows 👍 and 👎 on every card, and adds **Liked** and **Disliked** to the Saved filter. Reactions are saved to a free [Supabase](https://supabase.com) project, so they follow you across devices and the morning scout can read them. Until `config.js` has a project URL and key, the sign-in link stays hidden and the site works as before.
+Signing in adds a row of buttons to every card:
+
+- **Interested** / **Not interested**, for places you haven't been yet.
+- **📍 Been here**. Once marked, the card offers **👍** / **👎** and a written **review** instead. Un-marking it clears the rating and review.
+
+Signed in, Been here replaces the browser-only ✓ done mark, and a **My places** tab lists everything you've marked, grouped into Liked, Disliked, Been there (not rated), Interested and Not interested.
+
+Marks are saved to a free [Supabase](https://supabase.com) project, so they follow you across devices and the morning scout can read them. Until `config.js` has a project URL and key, the sign-in link stays hidden and the site works as before.
 
 One-time setup:
 
@@ -25,16 +32,16 @@ One-time setup:
 
 Sign in with the link the site emails you.
 
-### Reading likes (for the morning scout)
+### Reading marks (for the morning scout)
 
-Anyone with the anon key can read reactions, with no sign-in:
+Anyone with the anon key can read marks, with no sign-in:
 
 ```sh
-curl -s "$SUPABASE_URL/rest/v1/reactions?select=reaction,idea_id,idea_name,idea_type,idea_tags,idea_city,idea_area,updated_at&order=updated_at.desc" \
+curl -s "$SUPABASE_URL/rest/v1/idea_marks?select=idea_id,interest,visited,rating,review,idea_name,idea_type,idea_tags,idea_city,idea_area,updated_at&order=updated_at.desc" \
   -H "apikey: $SUPABASE_ANON_KEY"
 ```
 
-Both values are in `config.js`. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
+Both values are in `config.js`. `interest` is `interested`, `not_interested` or null; `visited` is true once been there, and then `rating` (`up`, `down` or null) and `review` say how it went. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
 
 ## Run it locally
 

@@ -1,21 +1,26 @@
-// Sign-in and like/dislike storage, backed by Supabase (see config.js and
-// supabase/schema.sql). Without a configured project this stays inert and the
-// site works as before.
+// Sign-in and per-idea marks (interested / not interested, been here, rating,
+// review), backed by Supabase (see config.js and supabase/schema.sql). Without
+// a configured project this stays inert and the site works as before.
 window.baobeiAccount = (() => {
   const { supabaseUrl, supabaseAnonKey } = window.BAOBEI_CONFIG || {};
   const listeners = [];
-  const reactions = new Map();
+  // idea_id -> { interest, visited, rating, review, idea_name, ... } for the signed-in user.
+  const marks = new Map();
+  const EMPTY = Object.freeze({ interest: null, visited: false, rating: null, review: "" });
   let user = null;
 
-  // Listeners get an idea id when one reaction changed, nothing when they all did.
+  // Listeners get an idea id when one mark changed, nothing when they all did.
   const notify = (id) => listeners.forEach((fn) => fn(id));
+
+  const isEmpty = (m) => !m.interest && !m.visited && !m.rating && !m.review;
 
   const api = {
     enabled: false,
     get signedIn() { return user !== null; },
-    reactionFor: (id) => reactions.get(id) || null,
+    markFor: (id) => marks.get(id) || EMPTY,
+    allMarks: () => [...marks.entries()],
     onChange: (fn) => listeners.push(fn),
-    setReaction: async () => {},
+    update: async () => {},
   };
 
   if (!supabaseUrl || !supabaseAnonKey || !window.supabase) return api;
@@ -47,17 +52,14 @@ window.baobeiAccount = (() => {
     els.who.textContent = user ? user.email : "";
   }
 
-  async function loadReactions(forUser) {
-    const { data, error } = await client
-      .from("reactions")
-      .select("idea_id, reaction")
-      .eq("user_id", forUser.id);
+  async function loadMarks(forUser) {
+    const { data, error } = await client.from("idea_marks").select("*").eq("user_id", forUser.id);
     if (user !== forUser) return; // Signed out or switched while loading.
     if (error) {
-      showMessage(`Couldn't load your likes (${error.message}).`);
+      showMessage(`Couldn't load your list (${error.message}).`);
       return;
     }
-    data.forEach((r) => reactions.set(r.idea_id, r.reaction));
+    data.forEach((row) => marks.set(row.idea_id, { ...row, review: row.review || "" }));
     notify();
   }
 
@@ -65,38 +67,44 @@ window.baobeiAccount = (() => {
     const next = session ? session.user : null;
     if ((next && next.id) === (user && user.id)) return; // Token refresh, same person.
     user = next;
-    reactions.clear();
+    marks.clear();
+    showMessage("");
     renderAccount();
     notify();
     // Supabase calls inside this callback can deadlock the auth client, so defer.
-    if (user) setTimeout(() => loadReactions(user), 0);
+    if (user) setTimeout(() => loadMarks(user), 0);
   });
 
-  api.setReaction = async (idea, value) => {
+  // Merge changes into the idea's mark, show it at once, then save; on failure, roll back.
+  api.update = async (idea, changes) => {
     if (!user) return;
     const id = idea.id;
-    const previous = reactions.get(id) || null;
-    if (value) reactions.set(id, value);
-    else reactions.delete(id);
+    const previous = marks.get(id);
+    const next = { ...EMPTY, ...previous, ...changes };
+    if (isEmpty(next)) marks.delete(id);
+    else marks.set(id, next);
     notify(id);
 
-    const { error } = value
-      ? await client.from("reactions").upsert({
+    const { error } = isEmpty(next)
+      ? await client.from("idea_marks").delete().eq("user_id", user.id).eq("idea_id", id)
+      : await client.from("idea_marks").upsert({
           user_id: user.id,
           idea_id: id,
-          reaction: value,
+          interest: next.interest,
+          visited: next.visited,
+          rating: next.rating,
+          review: next.review || null,
           idea_name: idea.name,
           idea_type: idea.type,
           idea_tags: idea.tags || [],
           idea_city: idea.city || null,
           idea_area: idea.area || null,
           updated_at: new Date().toISOString(),
-        })
-      : await client.from("reactions").delete().eq("user_id", user.id).eq("idea_id", id);
+        });
 
     if (error) {
-      if (previous) reactions.set(id, previous);
-      else reactions.delete(id);
+      if (previous) marks.set(id, previous);
+      else marks.delete(id);
       notify(id);
       showMessage(`Couldn't save that (${error.message}).`);
     }

@@ -21,9 +21,17 @@
     todayCards: document.getElementById("today-cards"),
     empty: document.getElementById("empty"),
     template: document.getElementById("card-template"),
+    tabs: document.getElementById("tabs"),
+    browse: document.getElementById("browse"),
+    mine: document.getElementById("mine"),
+    mineGroups: document.getElementById("mine-groups"),
+    mineEmpty: document.getElementById("mine-empty"),
   };
 
   let ideas = [];
+  // Every idea in the file, including past ones, so My places can still show them.
+  let allIdeas = new Map();
+  let view = "browse";
   let type = "all";
 
   // Today's date in Taiwan as YYYY-MM-DD, whatever the viewer's own time zone.
@@ -54,8 +62,19 @@
   const favorites = loadSet(STORAGE_KEYS.favorites);
   const done = loadSet(STORAGE_KEYS.done);
 
-  // Likes and dislikes are saved to the signed-in account (account.js).
+  // Interest, been here, ratings and reviews are saved to the signed-in account (account.js).
+  // Signed in, "done" means been here; signed out it's the browser-only mark.
   const account = window.baobeiAccount;
+  const isDone = (id) => (account.signedIn ? account.markFor(id).visited : done.has(id));
+
+  // My places, in order: [heading, test on a mark].
+  const MINE_GROUPS = [
+    ["Liked", (m) => m.visited && m.rating === "up"],
+    ["Disliked", (m) => m.visited && m.rating === "down"],
+    ["Been there, not rated yet", (m) => m.visited && !m.rating],
+    ["Interested", (m) => !m.visited && m.interest === "interested"],
+    ["Not interested", (m) => !m.visited && m.interest === "not_interested"],
+  ];
 
   // Drop events and openings whose end date has already passed.
   const isCurrent = (idea) => !idea.end_date || idea.end_date >= today;
@@ -106,10 +125,8 @@
     if (els.price.value !== "all" && (idea.price || 0) > Number(els.price.value)) return false;
     if (els.status.value !== "all" && idea.status !== els.status.value) return false;
     if (els.saved.value === "favorites" && !favorites.has(idea.id)) return false;
-    if (els.saved.value === "todo" && done.has(idea.id)) return false;
-    if (els.saved.value === "done" && !done.has(idea.id)) return false;
-    if (els.saved.value === "liked" && account.reactionFor(idea.id) !== "like") return false;
-    if (els.saved.value === "disliked" && account.reactionFor(idea.id) !== "dislike") return false;
+    if (els.saved.value === "todo" && isDone(idea.id)) return false;
+    if (els.saved.value === "done" && !isDone(idea.id)) return false;
     const q = els.search.value.trim().toLowerCase();
     if (q) {
       const hay = [idea.name, idea.description, idea.city, idea.area, ...(idea.tags || [])]
@@ -181,22 +198,42 @@
   }
 
   function setToggles(node, id) {
-    const isFav = favorites.has(id), isDone = done.has(id);
+    const isFav = favorites.has(id), wasDone = isDone(id);
     const fav = node.querySelector(".toggle.fav");
     fav.textContent = isFav ? "♥" : "♡";
     fav.setAttribute("aria-pressed", String(isFav));
     fav.title = isFav ? "Remove from favorites" : "Add to favorites";
     fav.setAttribute("aria-label", fav.title);
     const doneBtn = node.querySelector(".toggle.done");
-    doneBtn.setAttribute("aria-pressed", String(isDone));
-    doneBtn.title = isDone ? "Mark as not done" : "Mark as done";
+    // Signed in, the Been here button below takes over from this one.
+    doneBtn.hidden = account.signedIn;
+    doneBtn.setAttribute("aria-pressed", String(wasDone));
+    doneBtn.title = wasDone ? "Mark as not done" : "Mark as done";
     doneBtn.setAttribute("aria-label", doneBtn.title);
-    node.classList.toggle("is-done", isDone);
+    node.classList.toggle("is-done", wasDone && !account.signedIn);
+    setMarks(node, id);
+  }
 
-    node.querySelector(".reactions").hidden = !account.signedIn;
-    const reaction = account.reactionFor(id);
-    node.querySelector(".toggle.like").setAttribute("aria-pressed", String(reaction === "like"));
-    node.querySelector(".toggle.dislike").setAttribute("aria-pressed", String(reaction === "dislike"));
+  function setMarks(node, id) {
+    const m = account.markFor(id);
+    node.querySelector(".marks").hidden = !account.signedIn;
+    node.querySelectorAll(".mark").forEach((btn) => {
+      const kind = btn.dataset.mark;
+      // Interest is for places not visited yet; rating and review only once visited.
+      btn.hidden = (kind === "interested" || kind === "not_interested") ? m.visited
+        : (kind === "up" || kind === "down" || kind === "review") ? !m.visited
+        : false;
+      const pressed = kind === "visited" ? m.visited
+        : kind === "up" || kind === "down" ? m.rating === kind
+        : kind === "review" ? false
+        : m.interest === kind;
+      btn.setAttribute("aria-pressed", String(pressed));
+    });
+    node.querySelector(".mark.review").textContent = m.review ? "✎ Edit review" : "✎ Review";
+    const review = node.querySelector(".my-review");
+    review.textContent = m.review ? `“${m.review}”` : "";
+    review.hidden = !account.signedIn || !m.review;
+    node.classList.toggle("is-visited", account.signedIn && m.visited);
   }
 
   function toggleMark(set, key, id) {
@@ -255,7 +292,48 @@
   els.reset.addEventListener("click", reset);
   els.surprise.addEventListener("click", surprise);
 
+  // A card for each idea in My places, grouped. Ideas gone from the file use the saved snapshot.
+  function renderMine() {
+    const entries = account.allMarks();
+    const groups = MINE_GROUPS.map(([title, test]) => {
+      const list = entries.filter(([, m]) => test(m)).map(([id, m]) =>
+        allIdeas.get(id) || { id, name: m.idea_name || id, type: m.idea_type, tags: m.idea_tags, city: m.idea_city, area: m.idea_area }
+      ).sort((a, b) => a.name.localeCompare(b.name));
+      if (!list.length) return null;
+      const section = document.createElement("section");
+      section.className = "mine-group";
+      const h = document.createElement("h2");
+      h.className = "section-title";
+      h.textContent = `${title} (${list.length})`;
+      const cards = document.createElement("div");
+      cards.className = "cards";
+      cards.append(...list.map(renderCard));
+      section.append(h, cards);
+      return section;
+    }).filter(Boolean);
+    els.mineGroups.replaceChildren(...groups);
+    els.mineEmpty.hidden = groups.length > 0;
+  }
+
+  function showView(next) {
+    view = account.signedIn ? next : "browse";
+    els.tabs.hidden = !account.signedIn;
+    els.tabs.querySelectorAll(".tab").forEach((t) => {
+      const active = t.dataset.view === view;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", String(active));
+    });
+    els.browse.hidden = view !== "browse";
+    els.mine.hidden = view !== "mine";
+    if (view === "mine") renderMine();
+  }
+
   function refreshIdea(id) {
+    if (view === "mine") {
+      // Keep an open review box: re-rendering would throw away what's being typed.
+      if (!els.mine.querySelector(".review-form:not([hidden])")) renderMine();
+      return;
+    }
     // The same idea can be in both New today and the main list, so update every copy.
     els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     // Re-render only when the Saved filter could hide this card; otherwise update in place.
@@ -263,30 +341,69 @@
     else render();
   }
 
-  function onToggle(e) {
-    const btn = e.target.closest(".toggle");
-    if (!btn) return;
-    const id = btn.closest(".card").dataset.id;
-    if (btn.classList.contains("like") || btn.classList.contains("dislike")) {
-      const value = btn.classList.contains("like") ? "like" : "dislike";
-      const idea = ideas.find((i) => i.id === id);
-      // Clicking the pressed one again clears it. account.js calls refreshIdea via onChange.
-      account.setReaction(idea, account.reactionFor(id) === value ? null : value);
+  const findIdea = (id) => {
+    const m = account.markFor(id);
+    return allIdeas.get(id) || { id, name: m.idea_name || id, type: m.idea_type, tags: m.idea_tags, city: m.idea_city, area: m.idea_area };
+  };
+
+  // Clicking a pressed mark clears it. account.js calls refreshIdea via onChange.
+  function onMark(card, btn) {
+    const id = card.dataset.id, kind = btn.dataset.mark, m = account.markFor(id), idea = findIdea(id);
+    if (kind === "review") {
+      const form = card.querySelector(".review-form");
+      form.querySelector("textarea").value = m.review;
+      form.hidden = false;
+      form.querySelector("textarea").focus();
       return;
     }
+    if (kind === "visited") {
+      if (!m.visited) return account.update(idea, { visited: true });
+      if ((m.rating || m.review) && !confirm("Remove your rating and review for this place too?")) return;
+      return account.update(idea, { visited: false, rating: null, review: "" });
+    }
+    if (kind === "up" || kind === "down") return account.update(idea, { rating: m.rating === kind ? null : kind });
+    account.update(idea, { interest: m.interest === kind ? null : kind });
+  }
+
+  function onReviewSubmit(e) {
+    const form = e.target.closest(".review-form");
+    if (!form) return;
+    e.preventDefault();
+    const card = form.closest(".card");
+    form.hidden = true;
+    account.update(findIdea(card.dataset.id), { review: form.querySelector("textarea").value.trim() });
+  }
+
+  function onToggle(e) {
+    const card = e.target.closest(".card");
+    if (!card) return;
+    if (e.target.closest(".review-cancel")) {
+      card.querySelector(".review-form").hidden = true;
+      return;
+    }
+    const mark = e.target.closest(".mark");
+    if (mark) return onMark(card, mark);
+    const btn = e.target.closest(".toggle");
+    if (!btn) return;
+    const id = card.dataset.id;
     if (btn.classList.contains("fav")) toggleMark(favorites, STORAGE_KEYS.favorites, id);
     else toggleMark(done, STORAGE_KEYS.done, id);
     refreshIdea(id);
   }
   els.cards.addEventListener("click", onToggle);
   els.todayCards.addEventListener("click", onToggle);
+  els.mine.addEventListener("click", onToggle);
+  [els.cards, els.todayCards, els.mine].forEach((el) => el.addEventListener("submit", onReviewSubmit));
+
+  els.tabs.addEventListener("click", (e) => {
+    const tab = e.target.closest(".tab");
+    if (tab) showView(tab.dataset.view);
+  });
 
   account.onChange((id) => {
     if (id) return refreshIdea(id);
-    // Signed in or out: the Liked and Disliked filters only make sense signed in.
-    els.saved.querySelectorAll('option[value="liked"], option[value="disliked"]')
-      .forEach((o) => (o.disabled = !account.signedIn));
-    if (!account.signedIn && (els.saved.value === "liked" || els.saved.value === "disliked")) els.saved.value = "all";
+    // Signed in or out, or the whole list loaded.
+    showView(view);
     renderToday();
     render();
   });
@@ -297,11 +414,13 @@
       return r.json();
     })
     .then((data) => {
+      allIdeas = new Map(data.map((i) => [i.id, i]));
       ideas = data.filter(isCurrent);
       fillSelect(els.city, sortedCities(), "Everywhere");
       refreshAreas();
       renderToday();
       render();
+      if (view === "mine") renderMine();
     })
     .catch((err) => {
       els.empty.textContent = `Couldn't load ideas (${err.message}).`;
