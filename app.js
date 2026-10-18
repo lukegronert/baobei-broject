@@ -17,6 +17,8 @@
     reset: document.getElementById("reset"),
     surprise: document.getElementById("surprise"),
     cards: document.getElementById("cards"),
+    today: document.getElementById("today"),
+    todayCards: document.getElementById("today-cards"),
     empty: document.getElementById("empty"),
     template: document.getElementById("card-template"),
   };
@@ -205,6 +207,13 @@
     pick.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
+  // Ideas the scout added today, shown above the filters' results whatever they are.
+  function renderToday() {
+    const fresh = ideas.filter((i) => i.added_at === today).sort(comparators.featured);
+    els.todayCards.replaceChildren(...fresh.map(renderCard));
+    els.today.hidden = fresh.length === 0;
+  }
+
   function render() {
     const list = ideas.filter(matches).sort(comparators[els.sort.value] || comparators.featured);
     els.cards.replaceChildren(...list.map(renderCard));
@@ -236,17 +245,20 @@
   els.reset.addEventListener("click", reset);
   els.surprise.addEventListener("click", surprise);
 
-  els.cards.addEventListener("click", (e) => {
+  function onToggle(e) {
     const btn = e.target.closest(".toggle");
     if (!btn) return;
-    const card = btn.closest(".card");
-    const id = card.dataset.id;
+    const id = btn.closest(".card").dataset.id;
     if (btn.classList.contains("fav")) toggleMark(favorites, STORAGE_KEYS.favorites, id);
     else toggleMark(done, STORAGE_KEYS.done, id);
+    // The same idea can be in both New today and the main list, so update every copy.
+    els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     // Re-render only when the Saved filter could hide this card; otherwise update in place.
-    if (els.saved.value === "all") setToggles(card, id);
+    if (els.saved.value === "all") els.cards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     else render();
-  });
+  }
+  els.cards.addEventListener("click", onToggle);
+  els.todayCards.addEventListener("click", onToggle);
 
   fetch("data/ideas.json", { cache: "no-cache" })
     .then((r) => {
@@ -257,6 +269,7 @@
       ideas = data.filter(isCurrent);
       fillSelect(els.city, sortedCities(), "Everywhere");
       refreshAreas();
+      renderToday();
       render();
     })
     .catch((err) => {
