@@ -12,6 +12,18 @@
   <header class="site-header">
     <h1>Baobei Date Ideas</h1>
     <p class="tagline">Things to do together in Taipei and around Taiwan</p>
+    <div id="account" class="account" hidden>
+      <button id="sign-in" class="link-button" type="button">Sign in</button>
+      <form id="sign-in-form" class="sign-in-form" hidden>
+        <input id="sign-in-email" type="email" required autocomplete="email" placeholder="Your email" aria-label="Email">
+        <button type="submit">Email me a link</button>
+      </form>
+      <span id="signed-in" hidden>
+        <span id="account-email"></span>
+        <button id="sign-out" class="link-button" type="button">Sign out</button>
+      </span>
+      <p id="account-message" class="account-message" aria-live="polite" hidden></p>
+    </div>
   </header>
 
   <main>
@@ -65,6 +77,8 @@
             <option value="favorites">Favorites</option>
             <option value="todo">Not done yet</option>
             <option value="done">Done</option>
+            <option value="liked" disabled>Liked</option>
+            <option value="disliked" disabled>Disliked</option>
           </select>
         </label>
         <label>Sort
@@ -115,10 +129,19 @@
       <p class="dates" hidden></p>
       <p class="description"></p>
       <ul class="tags"></ul>
-      <div class="links"></div>
+      <div class="card-bottom">
+        <div class="links"></div>
+        <span class="reactions" hidden>
+          <button class="toggle like" type="button" aria-pressed="false" title="Like">👍</button>
+          <button class="toggle dislike" type="button" aria-pressed="false" title="Dislike">👎</button>
+        </span>
+      </div>
     </article>
   </template>
 
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js"></script>
+  <script src="account.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

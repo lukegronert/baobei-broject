@@ -54,6 +54,9 @@
   const favorites = loadSet(STORAGE_KEYS.favorites);
   const done = loadSet(STORAGE_KEYS.done);
 
+  // Likes and dislikes are saved to the signed-in account (account.js).
+  const account = window.baobeiAccount;
+
   // Drop events and openings whose end date has already passed.
   const isCurrent = (idea) => !idea.end_date || idea.end_date >= today;
 
@@ -105,6 +108,8 @@
     if (els.saved.value === "favorites" && !favorites.has(idea.id)) return false;
     if (els.saved.value === "todo" && done.has(idea.id)) return false;
     if (els.saved.value === "done" && !done.has(idea.id)) return false;
+    if (els.saved.value === "liked" && account.reactionFor(idea.id) !== "like") return false;
+    if (els.saved.value === "disliked" && account.reactionFor(idea.id) !== "dislike") return false;
     const q = els.search.value.trim().toLowerCase();
     if (q) {
       const hay = [idea.name, idea.description, idea.city, idea.area, ...(idea.tags || [])]
@@ -187,6 +192,11 @@
     doneBtn.title = isDone ? "Mark as not done" : "Mark as done";
     doneBtn.setAttribute("aria-label", doneBtn.title);
     node.classList.toggle("is-done", isDone);
+
+    node.querySelector(".reactions").hidden = !account.signedIn;
+    const reaction = account.reactionFor(id);
+    node.querySelector(".toggle.like").setAttribute("aria-pressed", String(reaction === "like"));
+    node.querySelector(".toggle.dislike").setAttribute("aria-pressed", String(reaction === "dislike"));
   }
 
   function toggleMark(set, key, id) {
@@ -245,20 +255,41 @@
   els.reset.addEventListener("click", reset);
   els.surprise.addEventListener("click", surprise);
 
-  function onToggle(e) {
-    const btn = e.target.closest(".toggle");
-    if (!btn) return;
-    const id = btn.closest(".card").dataset.id;
-    if (btn.classList.contains("fav")) toggleMark(favorites, STORAGE_KEYS.favorites, id);
-    else toggleMark(done, STORAGE_KEYS.done, id);
+  function refreshIdea(id) {
     // The same idea can be in both New today and the main list, so update every copy.
     els.todayCards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     // Re-render only when the Saved filter could hide this card; otherwise update in place.
     if (els.saved.value === "all") els.cards.querySelectorAll(".card").forEach((c) => c.dataset.id === id && setToggles(c, id));
     else render();
   }
+
+  function onToggle(e) {
+    const btn = e.target.closest(".toggle");
+    if (!btn) return;
+    const id = btn.closest(".card").dataset.id;
+    if (btn.classList.contains("like") || btn.classList.contains("dislike")) {
+      const value = btn.classList.contains("like") ? "like" : "dislike";
+      const idea = ideas.find((i) => i.id === id);
+      // Clicking the pressed one again clears it. account.js calls refreshIdea via onChange.
+      account.setReaction(idea, account.reactionFor(id) === value ? null : value);
+      return;
+    }
+    if (btn.classList.contains("fav")) toggleMark(favorites, STORAGE_KEYS.favorites, id);
+    else toggleMark(done, STORAGE_KEYS.done, id);
+    refreshIdea(id);
+  }
   els.cards.addEventListener("click", onToggle);
   els.todayCards.addEventListener("click", onToggle);
+
+  account.onChange((id) => {
+    if (id) return refreshIdea(id);
+    // Signed in or out: the Liked and Disliked filters only make sense signed in.
+    els.saved.querySelectorAll('option[value="liked"], option[value="disliked"]')
+      .forEach((o) => (o.disabled = !account.signedIn));
+    if (!account.signedIn && (els.saved.value === "liked" || els.saved.value === "disliked")) els.saved.value = "all";
+    renderToday();
+    render();
+  });
 
   fetch("data/ideas.json", { cache: "no-cache" })
     .then((r) => {

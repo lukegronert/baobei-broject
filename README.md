@@ -12,6 +12,30 @@ A **New today** row above the list shows every idea whose `added_at` is today, r
 
 Dates are compared against today's date in Taiwan (Asia/Taipei), so past events drop off at midnight Taipei time wherever you open the site.
 
+## Sign-in, likes and dislikes
+
+Signing in shows 👍 and 👎 on every card, and adds **Liked** and **Disliked** to the Saved filter. Reactions are saved to a free [Supabase](https://supabase.com) project, so they follow you across devices and the morning scout can read them. Until `config.js` has a project URL and key, the sign-in link stays hidden and the site works as before.
+
+One-time setup:
+
+1. Create a free Supabase project. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql).
+2. **Authentication → URL Configuration**: set Site URL to `https://lukegronert.github.io/baobei-broject/` and add it (plus `http://localhost:8000/` for local testing) to Redirect URLs.
+3. **Authentication → Users → Add user → Send invitation** for each person who should be able to sign in. Then **Authentication → Sign In / Providers**: turn off **Allow new users to sign up**, so nobody else can make an account.
+4. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
+
+Sign in with the link the site emails you.
+
+### Reading likes (for the morning scout)
+
+Anyone with the anon key can read reactions, with no sign-in:
+
+```sh
+curl -s "$SUPABASE_URL/rest/v1/reactions?select=reaction,idea_id,idea_name,idea_type,idea_tags,idea_city,idea_area,updated_at&order=updated_at.desc" \
+  -H "apikey: $SUPABASE_ANON_KEY"
+```
+
+Both values are in `config.js`. Each row carries a snapshot of the idea's name, type, tags and place, so it still makes sense after the idea leaves `ideas.json`.
+
 ## Run it locally
 
 ```sh
