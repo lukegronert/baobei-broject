@@ -33,6 +33,7 @@ window.baobeiAccount = (() => {
     signIn: document.getElementById("sign-in"),
     form: document.getElementById("sign-in-form"),
     email: document.getElementById("sign-in-email"),
+    password: document.getElementById("sign-in-password"),
     signedIn: document.getElementById("signed-in"),
     who: document.getElementById("account-email"),
     signOut: document.getElementById("sign-out"),
@@ -117,15 +118,12 @@ window.baobeiAccount = (() => {
   els.form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = els.email.value.trim();
-    if (!email) return;
-    showMessage("Sending…");
-    const { error } = await client.auth.signInWithOtp({
-      email,
-      // Accounts are added in the Supabase dashboard; the sign-in form never creates one.
-      options: { shouldCreateUser: false, emailRedirectTo: location.origin + location.pathname },
-    });
-    showMessage(error ? `Couldn't send the link (${error.message}).` : `Check ${email} for a sign-in link.`);
-    if (!error) els.form.hidden = true;
+    if (!email || !els.password.value) return;
+    showMessage("Signing in…");
+    // Accounts are made in the Supabase dashboard, which stores the password hashed.
+    const { error } = await client.auth.signInWithPassword({ email, password: els.password.value });
+    els.password.value = "";
+    showMessage(error ? `Couldn't sign in (${error.message}).` : "");
   });
 
   els.signOut.addEventListener("click", async () => {

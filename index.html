@@ -15,8 +15,9 @@
     <div id="account" class="account" hidden>
       <button id="sign-in" class="link-button" type="button">Sign in</button>
       <form id="sign-in-form" class="sign-in-form" hidden>
-        <input id="sign-in-email" type="email" required autocomplete="email" placeholder="Your email" aria-label="Email">
-        <button type="submit">Email me a link</button>
+        <input id="sign-in-email" type="email" required autocomplete="username" placeholder="Email" aria-label="Email">
+        <input id="sign-in-password" type="password" required autocomplete="current-password" placeholder="Password" aria-label="Password">
+        <button type="submit">Sign in</button>
       </form>
       <span id="signed-in" hidden>
         <span id="account-email"></span>
