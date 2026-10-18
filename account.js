@@ -32,8 +32,9 @@ window.baobeiAccount = (() => {
     root: document.getElementById("account"),
     signIn: document.getElementById("sign-in"),
     form: document.getElementById("sign-in-form"),
-    username: document.getElementById("sign-in-username"),
-    password: document.getElementById("sign-in-password"),
+    // Found by type rather than id, so a page and script from different versions still match up.
+    username: document.querySelector('#sign-in-form input:not([type="password"])'),
+    password: document.querySelector('#sign-in-form input[type="password"]'),
     signedIn: document.getElementById("signed-in"),
     who: document.getElementById("account-email"),
     signOut: document.getElementById("sign-out"),
