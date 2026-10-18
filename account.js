@@ -32,7 +32,7 @@ window.baobeiAccount = (() => {
     root: document.getElementById("account"),
     signIn: document.getElementById("sign-in"),
     form: document.getElementById("sign-in-form"),
-    email: document.getElementById("sign-in-email"),
+    username: document.getElementById("sign-in-username"),
     password: document.getElementById("sign-in-password"),
     signedIn: document.getElementById("signed-in"),
     who: document.getElementById("account-email"),
@@ -50,7 +50,7 @@ window.baobeiAccount = (() => {
     els.signIn.hidden = user !== null;
     els.signedIn.hidden = user === null;
     if (user) els.form.hidden = true;
-    els.who.textContent = user ? user.email : "";
+    els.who.textContent = user ? user.email.replace(/@baobei\.local$/, "") : "";
   }
 
   async function loadMarks(forUser) {
@@ -112,13 +112,16 @@ window.baobeiAccount = (() => {
 
   els.signIn.addEventListener("click", () => {
     els.form.hidden = !els.form.hidden;
-    if (!els.form.hidden) els.email.focus();
+    if (!els.form.hidden) els.username.focus();
   });
 
   els.form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = els.email.value.trim();
-    if (!email || !els.password.value) return;
+    const username = els.username.value.trim().toLowerCase();
+    if (!username || !els.password.value) return;
+    // Supabase signs in by email, so a username stands for <username>@baobei.local.
+    // Nothing is ever sent there; a full email still works as typed.
+    const email = username.includes("@") ? username : `${username}@baobei.local`;
     showMessage("Signing in…");
     // Accounts are made in the Supabase dashboard, which stores the password hashed.
     const { error } = await client.auth.signInWithPassword({ email, password: els.password.value });

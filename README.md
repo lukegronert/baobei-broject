@@ -26,15 +26,15 @@ Marks are saved to a free [Supabase](https://supabase.com) project, so they foll
 One-time setup:
 
 1. Create a free Supabase project. In **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql).
-2. **Authentication → Users → Add user → Create new user** for each person who should be able to sign in: an email and a password, with **Auto Confirm User** ticked. Supabase stores the password hashed. Then let them save marks by running this in **SQL Editor** with their emails:
+2. **Authentication → Users → Add user → Create new user** for each person who should be able to sign in. For the email, use their username followed by `@baobei.local` (for example `luke@baobei.local`), set a password and tick **Auto Confirm User**. They then sign in on the site with just the username and password; no email is ever sent. Supabase stores the password hashed. Then let them save marks by running this in **SQL Editor** with those emails:
    ```sql
    insert into public.allowed_users (user_id)
-   select id from auth.users where email in ('you@example.com', 'partner@example.com');
+   select id from auth.users where email in ('luke@baobei.local');
    ```
    Also turn off **Authentication → Sign In / Providers → Allow new users to sign up**. Even if that's missed, a stranger who signs up can't save anything, because only `allowed_users` can.
 3. **Project Settings → API**: copy the Project URL and the `anon` public key into [`config.js`](config.js). The anon key is meant to be public; never put the `service_role` key in this repo.
 
-Sign in on the site with that email and password.
+Sign in on the site with the username and password.
 
 ### Reading marks (for the morning scout)
 
