@@ -1144,5 +1144,28 @@
     "start_date": "2026-10-08",
     "added_at": "2026-10-19",
     "source": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B7%A8%E8%9B%8B%E6%97%81-7%E5%AE%B6%E6%96%B0%E9%A4%90%E5%BB%B3-%E4%BE%86%E4%BA%86-%E5%B8%9D%E7%8E%8B%E8%9F%B9-%E7%8F%BE%E9%96%8B%E7%94%9F%E8%A0%94%E5%90%83%E5%88%B0%E9%A3%BD-055200538.html"
+  },
+  {
+    "id": "digital-art-festival-taipei-2026",
+    "name": "Digital Art Festival Taipei 2026 (臺北數位藝術節)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 1,
+    "tags": [
+      "art",
+      "immersive",
+      "technology",
+      "night",
+      "garden"
+    ],
+    "description": "This year's theme is AI and algorithms (\"Gray Autonomous Entity\"), with interactive installations spread through the Taipei Collection Botanical Garden (典藏植物園) and the Expo Park Future Life Pavilion. Opening night on Oct 31 has an audiovisual show from 8 to 11pm and stays open until 2am alongside Nuit Blanche, or you can go on a quieter evening before Nov 15.",
+    "url": "https://www.digitalartfestival.tw/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%85%B8%E8%97%8F%E6%A4%8D%E7%89%A9%E5%9C%92",
+    "status": "new",
+    "start_date": "2026-10-31",
+    "end_date": "2026-11-15",
+    "added_at": "2026-10-20",
+    "source": "https://supertaste.tvbs.com.tw/travel/362037"
   }
 ]
