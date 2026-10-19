@@ -1150,7 +1150,7 @@
     "name": "Digital Art Festival Taipei 2026 (臺北數位藝術節)",
     "type": "event",
     "city": "Taipei",
-    "area": "Zhongzheng",
+    "area": "Zhongshan",
     "price": 1,
     "tags": [
       "art",
@@ -1159,9 +1159,9 @@
       "night",
       "garden"
     ],
-    "description": "This year's theme is AI and algorithms (\"Gray Autonomous Entity\"), with interactive installations spread through the Taipei Botanical Garden and the Expo Park Future Life Pavilion. Opening night on Oct 31 has an audiovisual show from 8 to 11pm and stays open until 2am alongside Nuit Blanche, or you can go on a quieter evening before Nov 15.",
+    "description": "This year's theme is AI and algorithms (\"Gray Autonomous Entity\"), with interactive installations spread through the Taipei Collection Botanical Garden (典藏植物園) and the Expo Park Future Life Pavilion. Opening night on Oct 31 has an audiovisual show from 8 to 11pm and stays open until 2am alongside Nuit Blanche, or you can go on a quieter evening before Nov 15.",
     "url": "https://www.digitalartfestival.tw/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%87%BA%E5%8C%97%E5%85%B8%E8%97%8F%E6%A4%8D%E7%89%A9%E5%9C%92+Taipei+Botanical+Garden",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%85%B8%E8%97%8F%E6%A4%8D%E7%89%A9%E5%9C%92",
     "status": "new",
     "start_date": "2026-10-31",
     "end_date": "2026-11-15",
