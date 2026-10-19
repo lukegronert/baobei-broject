@@ -1099,5 +1099,50 @@
     "start_date": "2026-10-01",
     "added_at": "2026-10-18",
     "source": "https://travel.udn.com/travel/story/7186/9781578"
+  },
+  {
+    "id": "ryuichi-sakamoto-seeing-sound-hearing-time-tfam",
+    "name": "Ryuichi Sakamoto: seeing sound, hearing time (坂本龍一｜觀音．聽時)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 1,
+    "tags": [
+      "art",
+      "music",
+      "exhibition",
+      "immersive",
+      "indoor"
+    ],
+    "description": "The record-breaking Tokyo retrospective comes to the Taipei Fine Arts Museum: seven large sound-and-light installations Sakamoto made with Shiro Takatani, Daito Manabe, Apichatpong Weerasethakul and others. Tickets are only NT$30 but are booked by time slot on OPENTIX, so reserve ahead.",
+    "url": "https://www.opentix.life/event/2105469201195143168",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%87%BA%E5%8C%97%E5%B8%82%E7%AB%8B%E7%BE%8E%E8%A1%93%E9%A4%A8+Taipei+Fine+Arts+Museum",
+    "status": "new",
+    "start_date": "2026-10-31",
+    "end_date": "2027-03-14",
+    "added_at": "2026-10-19",
+    "source": "https://www.peoplenews.tw/?p=59546"
+  },
+  {
+    "id": "rough-cuts-and-simple-sips-intercontinental-taipei",
+    "name": "Rough Cuts and Simple Sips (InterContinental Taipei)",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Xinyi",
+    "price": 4,
+    "tags": [
+      "steak",
+      "live fire",
+      "cocktails",
+      "jazz",
+      "hotel"
+    ],
+    "description": "The new InterContinental by the Taipei Dome opened on October 8 with Rough Cuts, a live-fire grill cooking over binchotan and lychee wood, and Simple Sips, a jazz bar next door with Taiwanese-twist cocktails picked from a sweet/sour vs strength map. Dinner then a nightcap without leaving the floor.",
+    "url": "https://www.ihg.com/intercontinental/hotels/gb/en/taipei/tpepi/hoteldetail/dining",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=InterContinental+Taipei+%E8%87%BA%E5%8C%97%E6%B4%B2%E9%9A%9B%E9%85%92%E5%BA%97",
+    "status": "new",
+    "start_date": "2026-10-08",
+    "added_at": "2026-10-19",
+    "source": "https://tw.news.yahoo.com/%E5%A4%A7%E5%B7%A8%E8%9B%8B%E6%97%81-7%E5%AE%B6%E6%96%B0%E9%A4%90%E5%BB%B3-%E4%BE%86%E4%BA%86-%E5%B8%9D%E7%8E%8B%E8%9F%B9-%E7%8F%BE%E9%96%8B%E7%94%9F%E8%A0%94%E5%90%83%E5%88%B0%E9%A3%BD-055200538.html"
   }
 ]
