@@ -1211,5 +1211,27 @@
     "end_date": "2026-11-22",
     "added_at": "2026-10-22",
     "source": "https://asianfilmfestivals.com/2026/06/01/taipei-golden-horse-film-festival-call-for-entry-2026/"
+  },
+  {
+    "id": "monet-to-matisse-toledo-fubon-art-museum",
+    "name": "Monet to Matisse: Toledo Museum of Art Collection II (現代藝術百年：莫內到馬諦斯)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Xinyi",
+    "price": 2,
+    "tags": [
+      "art",
+      "museum",
+      "impressionism",
+      "indoor"
+    ],
+    "description": "Works by Monet, Van Gogh, Picasso and Matisse on loan from the Toledo Museum of Art, tracing Impressionism into modern art, at the Fubon Art Museum. It's a strong winter date, and you can walk to Xinyi's Christmas lights afterward.",
+    "url": "https://www.fubonartmuseum.org/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%AF%8C%E9%82%A6%E7%BE%8E%E8%A1%93%E9%A4%A8+%E6%9D%BE%E9%AB%98%E8%B7%AF79%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-12-12",
+    "end_date": "2027-04-13",
+    "added_at": "2026-10-24",
+    "source": "https://n.yam.com/Article/20260605725184"
   }
 ]
