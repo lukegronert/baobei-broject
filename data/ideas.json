@@ -1233,5 +1233,26 @@
     "end_date": "2027-04-13",
     "added_at": "2026-10-24",
     "source": "https://n.yam.com/Article/20260605725184"
+  },
+  {
+    "id": "taipei-art-week-2026",
+    "name": "Taipei Art Week 2026",
+    "type": "event",
+    "city": "Taipei",
+    "area": "",
+    "price": 1,
+    "tags": [
+      "art",
+      "galleries",
+      "culture"
+    ],
+    "description": "Citywide art week running alongside Art Taipei, linking 50+ galleries, museums and 30 public artworks. Opening weekend (Oct 24–25) has a gallery weekend with free TAW art bus routes between galleries.",
+    "url": "https://taipeiartweek.tw/",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Taipei+galleries",
+    "status": "new",
+    "start_date": "2026-10-24",
+    "end_date": "2026-11-07",
+    "added_at": "2026-10-25",
+    "source": "https://www.cna.com.tw/postwrite/chi/445717"
   }
 ]
