@@ -1254,5 +1254,49 @@
     "end_date": "2026-11-07",
     "added_at": "2026-10-25",
     "source": "https://www.cna.com.tw/postwrite/chi/445717"
+  },
+  {
+    "id": "pinkoi-design-fest-2026",
+    "name": "Pinkoi Design Fest 2026 (Pinkoi瘋設祭)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 1,
+    "tags": [
+      "market",
+      "design",
+      "shopping",
+      "indoor"
+    ],
+    "description": "Pinkoi's big design market fills the Expo Dome at Yuanshan with 530+ independent brands from across Asia, 40 food stalls and a DJ stage. Entry is free with a Pinkoi membership; Saturday runs until 8pm.",
+    "url": "https://www.walkerland.com.tw/subject/view/425413",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%9C%93%E5%B1%B1%E8%8A%B1%E5%8D%9A%E7%88%AD%E8%89%B7%E9%A4%A8",
+    "status": "new",
+    "start_date": "2026-10-30",
+    "end_date": "2026-11-01",
+    "added_at": "2026-10-26",
+    "source": "https://www.walkerland.com.tw/subject/view/425413"
+  },
+  {
+    "id": "island-craft-market-sun-yat-sen-memorial-hall-2026",
+    "name": "Island Craft Market (島國禮作 岸北)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Xinyi",
+    "price": 1,
+    "tags": [
+      "market",
+      "crafts",
+      "outdoor",
+      "free"
+    ],
+    "description": "Free Taiwan-Japan handmade market on the Sun Yat-sen Memorial Hall plaza with 600+ makers, including 200 from Japan, Korea, Malaysia and Hong Kong: ceramics, woodwork, canvas goods and metal jewelry. An easy afternoon stroll.",
+    "url": "https://www.walkerland.com.tw/subject/view/425413",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%9C%8B%E7%88%B6%E7%B4%80%E5%BF%B5%E9%A4%A8",
+    "status": "new",
+    "start_date": "2026-11-13",
+    "end_date": "2026-11-15",
+    "added_at": "2026-10-26",
+    "source": "https://www.walkerland.com.tw/subject/view/425413"
   }
 ]
