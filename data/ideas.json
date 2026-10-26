@@ -1298,5 +1298,25 @@
     "end_date": "2026-11-15",
     "added_at": "2026-10-26",
     "source": "https://www.walkerland.com.tw/subject/view/425413"
+  },
+  {
+    "id": "narikura-taipei-daan",
+    "name": "Narikura (成蔵)",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Da'an",
+    "price": 3,
+    "tags": [
+      "japanese",
+      "tonkatsu",
+      "counter seating"
+    ],
+    "description": "The Tokyo Bib Gourmand tonkatsu shop's new Taipei branch serves its pale, low-temperature-fried cutlets omakase-style at the counter, one cut at a time. Sets are NT$980 or NT$1,580; book ahead, since only 10 walk-in seats are released each day.",
+    "url": "https://supertaste.tvbs.com.tw/hot/361816",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E6%88%90%E8%94%B5+%E5%8F%B0%E5%8C%97%E5%A4%A7%E5%AE%89",
+    "status": "new",
+    "start_date": "2026-10-06",
+    "added_at": "2026-10-27",
+    "source": "https://supertaste.tvbs.com.tw/hot/361816"
   }
 ]
