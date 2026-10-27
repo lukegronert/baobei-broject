@@ -1318,5 +1318,27 @@
     "start_date": "2026-10-06",
     "added_at": "2026-10-27",
     "source": "https://supertaste.tvbs.com.tw/hot/361816"
+  },
+  {
+    "id": "national-geographic-photo-ark-20th-anniversary-huashan",
+    "name": "National Geographic Photo Ark: 20th Anniversary Exhibition (國家地理影像方舟20週年特展)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongzheng",
+    "price": 2,
+    "tags": [
+      "exhibition",
+      "photography",
+      "animals",
+      "indoor"
+    ],
+    "description": "153 of Joel Sartore's black-and-white Photo Ark animal portraits, from rare species worldwide to Taiwan's native animals, at Huashan 1914. Early-bird tickets are NT$350 until Nov 8, then NT$400 presale and NT$450 during the run.",
+    "url": "https://n.yam.com/Article/20261026634030",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%8F%AF%E5%B1%B11914%E6%96%87%E5%8C%96%E5%89%B5%E6%84%8F%E7%94%A2%E6%A5%AD%E5%9C%92%E5%8D%80",
+    "status": "new",
+    "start_date": "2026-12-25",
+    "end_date": "2027-04-06",
+    "added_at": "2026-10-28",
+    "source": "https://n.yam.com/Article/20261026634030"
   }
 ]
