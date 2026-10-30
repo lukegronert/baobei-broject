@@ -1340,5 +1340,27 @@
     "end_date": "2027-04-06",
     "added_at": "2026-10-28",
     "source": "https://n.yam.com/Article/20261026634030"
+  },
+  {
+    "id": "shilin-yes-immersive-theatre-tpac",
+    "name": "Shilin YES! Immersive Theatre (沉浸式劇場《士林YES！》)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Shilin",
+    "price": 3,
+    "tags": [
+      "theatre",
+      "immersive",
+      "night market",
+      "food"
+    ],
+    "description": "Theatre troupe 全民大劇團 turns the Taipei Performing Arts Center into Shilin Night Market circa 1990: you wander as night-market visitors from the ground floor up to the Blue Box, with night-market snacks served along the way. 90 minutes, in Mandarin; tickets NT$1,500–3,500.",
+    "url": "https://www.opentix.life/event/2065059039769808896",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%87%BA%E5%8C%97%E8%A1%A8%E6%BC%94%E8%97%9D%E8%A1%93%E4%B8%AD%E5%BF%83",
+    "status": "new",
+    "start_date": "2026-11-20",
+    "end_date": "2026-11-29",
+    "added_at": "2026-10-31",
+    "source": "https://tpac.org.taipei/program/2040"
   }
 ]
