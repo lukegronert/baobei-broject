@@ -1362,5 +1362,27 @@
     "end_date": "2026-11-29",
     "added_at": "2026-10-31",
     "source": "https://tpac.org.taipei/program/2040"
+  },
+  {
+    "id": "showei-zhongshan",
+    "name": "SHOWEI (承蔚)",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Zhongshan",
+    "price": 4,
+    "tags": [
+      "fine dining",
+      "taiwanese",
+      "french",
+      "tasting menu",
+      "counter seating"
+    ],
+    "description": "Chef 邱奕承 (Adam)'s new restaurant reworks familiar Taiwanese flavours with French technique, such as a fillet nodding to pig's blood cake. Grab two of the six counter seats and add dishes from the day's seafood on ice; tasting menu NT$3,500 per person, reservations only, closed Sunday and Monday.",
+    "url": "https://www.mirrormedia.mg/story/20261030food003",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E6%89%BF%E8%94%9A+%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E5%BB%BA%E5%9C%8B%E5%8C%97%E8%B7%AF%E4%B8%80%E6%AE%B568%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-10-20",
+    "added_at": "2026-11-01",
+    "source": "https://www.mirrormedia.mg/story/20261030food003"
   }
 ]
