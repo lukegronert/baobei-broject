@@ -21,28 +21,6 @@
     "source": "https://2026.art-taipei.com/taipei/en/"
   },
   {
-    "id": "nuit-blanche-taipei",
-    "name": "Nuit Blanche Taipei",
-    "type": "event",
-    "city": "Taipei",
-    "area": "Zhongshan",
-    "price": 1,
-    "tags": [
-      "art",
-      "night",
-      "free",
-      "outdoor"
-    ],
-    "description": "Free all-night art festival with installations and performances around Taipei Expo Park, running from afternoon until 2am.",
-    "url": "https://www.nuitblanche.taipei/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=Taipei+Expo+Park",
-    "status": "trending",
-    "start_date": "2026-10-31",
-    "end_date": "2026-11-01",
-    "added_at": "2026-10-18",
-    "source": "https://taiwanderers.com/taiwan-november-events-festivals/"
-  },
-  {
     "id": "shilin-residence-chrysanthemum-festival",
     "name": "Shilin Residence Chrysanthemum Festival",
     "type": "event",
@@ -1256,28 +1234,6 @@
     "source": "https://www.cna.com.tw/postwrite/chi/445717"
   },
   {
-    "id": "pinkoi-design-fest-2026",
-    "name": "Pinkoi Design Fest 2026 (Pinkoi瘋設祭)",
-    "type": "event",
-    "city": "Taipei",
-    "area": "Zhongshan",
-    "price": 1,
-    "tags": [
-      "market",
-      "design",
-      "shopping",
-      "indoor"
-    ],
-    "description": "Pinkoi's big design market fills the Expo Dome at Yuanshan with 530+ independent brands from across Asia, 40 food stalls and a DJ stage. Entry is free with a Pinkoi membership; Saturday runs until 8pm.",
-    "url": "https://www.walkerland.com.tw/subject/view/425413",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%9C%93%E5%B1%B1%E8%8A%B1%E5%8D%9A%E7%88%AD%E8%89%B7%E9%A4%A8",
-    "status": "new",
-    "start_date": "2026-10-30",
-    "end_date": "2026-11-01",
-    "added_at": "2026-10-26",
-    "source": "https://www.walkerland.com.tw/subject/view/425413"
-  },
-  {
     "id": "dao-guo-li-zuo-handmade-market-2026",
     "name": "島國禮作 Handmade Market (岸北)",
     "type": "event",
@@ -1384,5 +1340,28 @@
     "start_date": "2026-10-20",
     "added_at": "2026-11-01",
     "source": "https://www.mirrormedia.mg/story/20261030food003"
+  },
+  {
+    "id": "fashion-photography-ncpi-taipei-2026",
+    "name": "Fashion photography exhibition at the National Center of Photography and Images (時尚流聲：穿在身上的語言)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongzheng",
+    "price": 1,
+    "tags": [
+      "exhibition",
+      "photography",
+      "fashion",
+      "free",
+      "indoor"
+    ],
+    "description": "Free show on where photography meets fashion, with 35 artists from early studio portraits and family snapshots to commercial shoots, contemporary art and AI work. The 3rd floor opened Oct 27 and the 2nd floor follows on Nov 11.",
+    "url": "https://ncpi.ntmofa.gov.tw/News_Content_OnlineExhibitionPic.aspx?n=8005&s=262437",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%9C%8B%E5%AE%B6%E6%94%9D%E5%BD%B1%E6%96%87%E5%8C%96%E4%B8%AD%E5%BF%83%E8%87%BA%E5%8C%97%E9%A4%A8",
+    "status": "new",
+    "start_date": "2026-10-27",
+    "end_date": "2027-03-14",
+    "added_at": "2026-11-02",
+    "source": "https://arttaiwan.com/blogs/on-view/taipei-exhibitions-november-2026"
   }
 ]
