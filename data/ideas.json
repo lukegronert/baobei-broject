@@ -1,26 +1,5 @@
 [
   {
-    "id": "art-taipei-2026",
-    "name": "Art Taipei 2026",
-    "type": "event",
-    "city": "Taipei",
-    "area": "Xinyi",
-    "price": 2,
-    "tags": [
-      "art",
-      "indoor",
-      "culture"
-    ],
-    "description": "Taiwan's biggest contemporary art fair fills TWTC Exhibition Hall 1. Wander the galleries, then grab dinner in Xinyi.",
-    "url": "https://2026.art-taipei.com/taipei/en/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=Taipei+World+Trade+Center+Exhibition+Hall+1",
-    "status": "classic",
-    "start_date": "2026-10-30",
-    "end_date": "2026-11-02",
-    "added_at": "2026-10-18",
-    "source": "https://2026.art-taipei.com/taipei/en/"
-  },
-  {
     "id": "shilin-residence-chrysanthemum-festival",
     "name": "Shilin Residence Chrysanthemum Festival",
     "type": "event",
@@ -1363,5 +1342,27 @@
     "end_date": "2027-03-14",
     "added_at": "2026-11-02",
     "source": "https://arttaiwan.com/blogs/on-view/taipei-exhibitions-november-2026"
+  },
+  {
+    "id": "jima-cafe-zhengbin-keelung",
+    "name": "Jima Cafe at the old Zhengbin Police Station (舊正濱派出所)",
+    "type": "place",
+    "city": "Keelung",
+    "area": "Zhengbin Fishing Port",
+    "price": 2,
+    "tags": [
+      "cafe",
+      "day trip",
+      "sea view",
+      "rooftop",
+      "dessert"
+    ],
+    "description": "The old police station beside Zhengbin Fishing Port is now a café, with a rooftop terrace taking in the harbour, the colourful houses and Heping Island in a 270-degree view. Pair it with a wander round the port; open 11am to 7pm in winter, closed Monday and Tuesday.",
+    "url": "https://travel.ettoday.net/article/3264712.htm",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%88%8A%E6%AD%A3%E6%BF%B1%E6%B4%BE%E5%87%BA%E6%89%80+%E5%9F%BA%E9%9A%86",
+    "status": "new",
+    "start_date": "2026-11-02",
+    "added_at": "2026-11-03",
+    "source": "https://travel.ettoday.net/article/3264712.htm"
   }
 ]
