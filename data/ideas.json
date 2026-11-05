@@ -1387,5 +1387,27 @@
     "end_date": "2026-12-13",
     "added_at": "2026-11-04",
     "source": "https://taiwan.ahk.de/tw/event-2026/2026-german-christmas-market-new-taipei-taipei-taoyuan"
+  },
+  {
+    "id": "jimmy-liao-immersive-exhibition-huashan",
+    "name": "Jimmy Liao Immersive Exhibition (與幾米頭碰頭 全境式沉浸互動展)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongzheng",
+    "price": 2,
+    "tags": [
+      "exhibition",
+      "immersive",
+      "illustration",
+      "indoor"
+    ],
+    "description": "An all-digital, immersive take on Jimmy Liao's picture books for his 25th anniversary, built around 《頭碰頭說說話》 and weaving in Turn Left, Turn Right and 《月亮忘記了》, stories about missing each other, forgetting and finding again. It runs at Huashan's Magic Box until Valentine's Day; single tickets are NT$450 during the run.",
+    "url": "https://www.marieclaire.com.tw/lifestyle/whats-hot/96300",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%8F%AF%E5%B1%B11914%E6%96%87%E5%8C%96%E5%89%B5%E6%84%8F%E7%94%A2%E6%A5%AD%E5%9C%92%E5%8D%80",
+    "status": "new",
+    "start_date": "2026-12-24",
+    "end_date": "2027-02-14",
+    "added_at": "2026-11-06",
+    "source": "https://gofunit.com/%E5%8F%B0%E5%8C%97%E5%B1%95%E8%A6%BD%E7%89%B9%E5%B1%95%E6%94%BB%E7%95%A5/"
   }
 ]
