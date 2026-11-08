@@ -1388,5 +1388,26 @@
     "end_date": "2027-02-14",
     "added_at": "2026-11-06",
     "source": "https://gofunit.com/%E5%8F%B0%E5%8C%97%E5%B1%95%E8%A6%BD%E7%89%B9%E5%B1%95%E6%94%BB%E7%95%A5/"
+  },
+  {
+    "id": "dosa-by-akira-back-intercontinental-taipei",
+    "name": "DOSA by Akira Back",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Xinyi",
+    "price": 4,
+    "tags": [
+      "korean",
+      "tasting menu",
+      "chef's counter",
+      "splurge"
+    ],
+    "description": "Akira Back's Korean fine-dining restaurant, which holds a Michelin star in Seoul and in London, opens a 16-seat counter at the new InterContinental Taipei by the Taipei Dome. The opening menu is a nine-course autumn tasting menu built on Korean fermentation, including soy-marinated lobster and a wild-mushroom pot rice.",
+    "url": "https://news.nextapple.com/life/20261108/0BA9B45310368591BE64C854262432E7",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=DOSA%20by%20Akira%20Back%20%E5%8F%B0%E5%8C%97%E6%B4%B2%E9%9A%9B%E9%85%92%E5%BA%97",
+    "status": "new",
+    "start_date": "2026-11-12",
+    "added_at": "2026-11-09",
+    "source": "https://news.nextapple.com/life/20261108/0BA9B45310368591BE64C854262432E7"
   }
 ]
