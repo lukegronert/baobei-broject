@@ -1409,5 +1409,26 @@
     "start_date": "2026-11-12",
     "added_at": "2026-11-09",
     "source": "https://news.nextapple.com/life/20261108/0BA9B45310368591BE64C854262432E7"
+  },
+  {
+    "id": "restaurant-bon-appetit-daan",
+    "name": "Restaurant Bon appétit",
+    "type": "restaurant",
+    "city": "Taipei",
+    "area": "Da'an",
+    "price": 3,
+    "tags": [
+      "french",
+      "tasting menu",
+      "dinner",
+      "intimate"
+    ],
+    "description": "A new 20-seat French tasting-menu restaurant in a lane off Dunhua South Road, led by Chef Ryan, who trained in French cooking in Tokyo. Dinner is eight courses from NT$1,880 + 10%, with dry-aged fillet or aged duck breast as the main, and lunch is six courses from NT$1,280 + 10%.",
+    "url": "https://tw.news.yahoo.com/%E8%A9%B1%E9%A1%8C%E6%96%B0%E9%A4%90%E5%BB%B3-%E7%B1%B3%E5%85%B6%E6%9E%97%E4%B8%BB%E5%BB%9Aakira-back%E5%85%A8%E7%90%83%E6%8B%9B%E7%89%8C%E8%8F%9C%E7%99%BB%E5%8F%B0-%E5%B9%B3%E5%83%B9%E7%B2%BE%E7%B7%BB%E6%B3%95%E9%A4%90bon-app-101615029.html",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Restaurant%20Bon%20app%C3%A9tit%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E6%95%A6%E5%8C%96%E5%8D%97%E8%B7%AF%E4%B8%80%E6%AE%B5160%E5%B7%B718%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-11-14",
+    "added_at": "2026-11-14",
+    "source": "https://tw.news.yahoo.com/%E8%A9%B1%E9%A1%8C%E6%96%B0%E9%A4%90%E5%BB%B3-%E7%B1%B3%E5%85%B6%E6%9E%97%E4%B8%BB%E5%BB%9Aakira-back%E5%85%A8%E7%90%83%E6%8B%9B%E7%89%8C%E8%8F%9C%E7%99%BB%E5%8F%B0-%E5%B9%B3%E5%83%B9%E7%B2%BE%E7%B7%BB%E6%B3%95%E9%A4%90bon-app-101615029.html"
   }
 ]
