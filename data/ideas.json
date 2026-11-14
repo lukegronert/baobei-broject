@@ -1430,5 +1430,26 @@
     "start_date": "2026-11-14",
     "added_at": "2026-11-14",
     "source": "https://tw.news.yahoo.com/%E8%A9%B1%E9%A1%8C%E6%96%B0%E9%A4%90%E5%BB%B3-%E7%B1%B3%E5%85%B6%E6%9E%97%E4%B8%BB%E5%BB%9Aakira-back%E5%85%A8%E7%90%83%E6%8B%9B%E7%89%8C%E8%8F%9C%E7%99%BB%E5%8F%B0-%E5%B9%B3%E5%83%B9%E7%B2%BE%E7%B7%BB%E6%B3%95%E9%A4%90bon-app-101615029.html"
+  },
+  {
+    "id": "spirited-away-stage-play-national-theater",
+    "name": "Spirited Away stage play (《神隱少女》舞台劇)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongzheng",
+    "price": 3,
+    "tags": [
+      "theater",
+      "ghibli",
+      "live music"
+    ],
+    "description": "The stage version of Spirited Away, directed by John Caird, comes to Taiwan for the first time with an orchestra playing Joe Hisaishi's score live, a revolving stage and giant puppets for No-Face and Yubaba. It is performed in Japanese with Chinese subtitles, and tickets run NT$1,800–8,300.",
+    "url": "https://www.opentix.life/event/2054505084713033728",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E5%9C%8B%E5%AE%B6%E6%88%B2%E5%8A%87%E9%99%A2%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E6%AD%A3%E5%8D%80%E4%B8%AD%E5%B1%B1%E5%8D%97%E8%B7%AF21%E4%B9%8B1%E8%99%9F",
+    "status": "new",
+    "start_date": "2026-12-17",
+    "end_date": "2027-01-31",
+    "added_at": "2026-11-15",
+    "source": "https://news.tvbs.com.tw/entertainment/3243632"
   }
 ]
