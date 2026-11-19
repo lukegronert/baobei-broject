@@ -1406,5 +1406,26 @@
     "end_date": "2027-01-31",
     "added_at": "2026-11-15",
     "source": "https://news.tvbs.com.tw/entertainment/3243632"
+  },
+  {
+    "id": "diana-krall-taipei-music-center-2026",
+    "name": "Diana Krall live in Taipei (戴安娜．克瑞兒)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Nangang",
+    "price": 3,
+    "tags": [
+      "concert",
+      "jazz",
+      "live music"
+    ],
+    "description": "Grammy-winning jazz singer and pianist Diana Krall plays two shows at Taipei Music Center, an evening show on Nov 28 at 7:30pm and an afternoon show on Nov 29 at 4pm. It's a low-key piano-and-voice set of jazz standards, which makes it an easy pick for a grown-up date night.",
+    "url": "https://www.ctee.com.tw/news/20260909701589-431207",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E8%87%BA%E5%8C%97%E6%B5%81%E8%A1%8C%E9%9F%B3%E6%A8%82%E4%B8%AD%E5%BF%83%20%E5%8D%97%E6%B8%AF",
+    "status": "new",
+    "start_date": "2026-11-28",
+    "end_date": "2026-11-29",
+    "added_at": "2026-11-20",
+    "source": "https://www.ctee.com.tw/news/20260909701589-431207"
   }
 ]
