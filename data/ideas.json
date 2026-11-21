@@ -1427,5 +1427,26 @@
     "end_date": "2026-11-29",
     "added_at": "2026-11-20",
     "source": "https://www.ctee.com.tw/news/20260909701589-431207"
+  },
+  {
+    "id": "domi-and-jd-beck-clapper-studio-2026",
+    "name": "DOMi & JD BECK: WHO ASKED? Tour",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Zhongzheng",
+    "price": 3,
+    "tags": [
+      "concert",
+      "jazz",
+      "live music"
+    ],
+    "description": "Jazz duo DOMi & JD BECK bring their WHO ASKED? tour to Clapper Studio, on the 5th floor of Syntrend Creative Park, for one Friday night on Dec 4 (tickets NT$1,980 via Live Nation Taiwan). A good pick for a live-music date night in the city centre.",
+    "url": "https://www.livenation.com.tw/en/event/domi-and-jd-beck-who-asked-tour-taipei-tickets-edp1689630",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Clapper%20Studio%20Syntrend%20Creative%20Park%20Taipei",
+    "status": "new",
+    "start_date": "2026-12-04",
+    "end_date": "2026-12-04",
+    "added_at": "2026-11-22",
+    "source": "https://www.livenation.com.tw/en/event/domi-and-jd-beck-who-asked-tour-taipei-tickets-edp1689630"
   }
 ]
