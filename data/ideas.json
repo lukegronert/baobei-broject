@@ -111,28 +111,6 @@
     "source": "https://taiwantrailsandtales.com/tag/silvergrass-season-taiwan/"
   },
   {
-    "id": "taiwan-open-of-surfing",
-    "name": "Taiwan Open of Surfing",
-    "type": "event",
-    "city": "Taitung",
-    "area": "Donghe",
-    "price": 2,
-    "tags": [
-      "beach",
-      "road trip",
-      "sports",
-      "east coast"
-    ],
-    "description": "International surf contest at Jinzun on the Taitung coast. A good excuse for an east coast weekend to watch the pros and relax on the beach.",
-    "url": "https://www.taiwanopenofsurfing.org/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=Jinzun+Recreation+Area+Taitung",
-    "status": "trending",
-    "start_date": "2026-11-06",
-    "end_date": "2026-11-22",
-    "added_at": "2026-10-18",
-    "source": "https://taiwanderers.com/taiwan-november-events-festivals/"
-  },
-  {
     "id": "mizue",
     "name": "Mizue",
     "type": "restaurant",
@@ -1123,28 +1101,6 @@
     "end_date": "2026-12-31",
     "added_at": "2026-10-22",
     "source": "https://www.marieclaire.com.tw/lifestyle/art/96217"
-  },
-  {
-    "id": "taipei-golden-horse-film-festival-2026",
-    "name": "Taipei Golden Horse Film Festival 2026 (台北金馬影展)",
-    "type": "event",
-    "city": "Taipei",
-    "area": "",
-    "price": 2,
-    "tags": [
-      "film",
-      "festival",
-      "indoor",
-      "night"
-    ],
-    "description": "Taipei's big annual film festival runs for two and a half weeks of new Asian and international films. Pick a screening or two and make an evening of dinner and a movie.",
-    "url": "https://www.goldenhorse.org.tw/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=Taipei+Golden+Horse+Film+Festival",
-    "status": "new",
-    "start_date": "2026-11-06",
-    "end_date": "2026-11-22",
-    "added_at": "2026-10-22",
-    "source": "https://asianfilmfestivals.com/2026/06/01/taipei-golden-horse-film-festival-call-for-entry-2026/"
   },
   {
     "id": "monet-to-matisse-toledo-fubon-art-museum",
