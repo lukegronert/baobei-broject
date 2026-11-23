@@ -971,28 +971,6 @@
     "source": "https://www.taiwannews.com.tw/zh/news/6408721"
   },
   {
-    "id": "the-fear-exhibition-taipei",
-    "name": "The Fear Exhibition (恐怖心展)",
-    "type": "event",
-    "city": "Taipei",
-    "area": "Zhongshan",
-    "price": 2,
-    "tags": [
-      "exhibition",
-      "immersive",
-      "spooky",
-      "indoor"
-    ],
-    "description": "A hit Japanese immersive exhibition about everyday fears, in an underground space near Zhongshan MRT. Good for a fun, slightly creepy date night, open until 9pm.",
-    "url": "https://www.klook.com/zh-TW/activity/229309-the-fear-exhibition/",
-    "maps_url": "https://www.google.com/maps/search/?api=1&query=%E7%81%B0%E6%A3%9A+%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E4%B8%AD%E5%B1%B1%E5%8C%97%E8%B7%AF%E4%BA%8C%E6%AE%B559%E5%B7%B716%E8%99%9F",
-    "status": "new",
-    "start_date": "2026-09-12",
-    "end_date": "2026-11-23",
-    "added_at": "2026-10-18",
-    "source": "https://supertaste.tvbs.com.tw/hot/361054"
-  },
-  {
     "id": "taipei-coffee-festival-2026",
     "name": "Taipei Coffee Festival 2026 (臺北咖啡節)",
     "type": "event",
