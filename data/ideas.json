@@ -1382,5 +1382,28 @@
     "end_date": "2026-12-04",
     "added_at": "2026-11-22",
     "source": "https://www.livenation.com.tw/en/event/domi-and-jd-beck-who-asked-tour-taipei-tickets-edp1689630"
+  },
+  {
+    "id": "taipei-christmas-lights-daan-forest-park-2026",
+    "name": "Taipei Christmas Lights at Daan Forest Park (臺北耶誕愛無限)",
+    "type": "event",
+    "city": "Taipei",
+    "area": "Da'an",
+    "price": 1,
+    "tags": [
+      "christmas",
+      "lights",
+      "park",
+      "evening",
+      "seasonal"
+    ],
+    "description": "The city's Christmas light displays return to Daan Forest Park, lit every evening from 5pm to 10pm, from Dec 3 (lighting ceremony that evening) to Jan 1. A December market runs Dec 12–13, making it an easy after-dinner Christmas stroll.",
+    "url": "https://www.travel.taipei/en/event-calendar/details/66777",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Daan%20Forest%20Park%20Taipei",
+    "status": "new",
+    "start_date": "2026-12-03",
+    "end_date": "2027-01-01",
+    "added_at": "2026-11-28",
+    "source": "https://blog.accupass.com/december-2026-event-map.html"
   }
 ]
